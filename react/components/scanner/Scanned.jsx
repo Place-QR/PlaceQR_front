@@ -1,7 +1,7 @@
 import React from "react";
 import {StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
-function Read({navigation}) {
+function Scanned({navigation}) {
   return (
     <View style={styles.container}>
       <Text style={styles.placeTitle}>{"\n"}장소 이름</Text>
@@ -12,7 +12,7 @@ function Read({navigation}) {
       <TouchableOpacity activeOpacity={0.8} style={styles.ReadWriteBtn} onPress={() => navigation.navigate('Read')}>
         <Text style={styles.WhiteText}>  방명록 읽기 </Text>
       </TouchableOpacity>
-      <TouchableOpacity activeOpacity={0.8} style={styles.ReadWriteBtn} onPress={() => navigation.navigate('Read')}>
+      <TouchableOpacity activeOpacity={0.8} style={styles.ReadWriteBtn} onPress={() => navigation.navigate('Write')}>
         <Text style={styles.WhiteText}>  방명록 쓰기 </Text>
       </TouchableOpacity>
     </View>
@@ -64,4 +64,4 @@ const styles = StyleSheet.create({
     }
   });
 
-export default Read;
+export default Scanned;

@@ -6,7 +6,7 @@ function Scan({navigation}) {
     <View style={styles.container}>
         <View style={styles.scanner}>
         </View>
-        <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={() => navigation.navigate('Read')}>
+        <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={() => navigation.navigate('Scanned')}>
             <Text style={styles.text}>  QR인식 </Text>
         </TouchableOpacity>
     </View>
