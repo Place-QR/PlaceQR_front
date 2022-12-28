@@ -20,7 +20,7 @@ export default function App() {
           headerStyle: {
             height: 120,
           }
-          }}>
+          }}> 
           <Stack.Screen name="Scan" component={Scan} options={{title: 'Place.QR'}}/>
           <Stack.Screen name="Scanned" component={Scanned} options={{title: 'Place.QR'}}/>
           <Stack.Screen name="Write" component={Write} options={{title: 'Place.QR'}}/>
