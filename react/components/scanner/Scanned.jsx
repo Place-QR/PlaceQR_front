@@ -1,20 +1,33 @@
 import React from "react";
-import {StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import {StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 
 function Scanned({navigation}) {
   return (
     <View style={styles.container}>
+      <Image
+        style={{
+          width:'100%', 
+          height:'40%', 
+          position:'absolute', 
+          zIndex:2,
+          bottom:-55,
+        }}
+        source={require("../../assets/PQRbackIMG4.png")}
+        resizeMode="center"
+        />
       <Text style={styles.placeTitle}>{"\n"}장소 이름</Text>
       <Text style={styles.textBold}>방문하셨어요!</Text>
       <View style={styles.profileImg}>
         <Text style={styles.textBold}>프로필{"\n"}이미지</Text>
       </View>
-      <TouchableOpacity activeOpacity={0.8} style={styles.ReadWriteBtn} onPress={() => navigation.navigate('Read')}>
-        <Text style={styles.WhiteText}>  방명록 읽기 </Text>
-      </TouchableOpacity>
-      <TouchableOpacity activeOpacity={0.8} style={styles.ReadWriteBtn} onPress={() => navigation.navigate('Write')}>
-        <Text style={styles.WhiteText}>  방명록 쓰기 </Text>
-      </TouchableOpacity>
+      <View style={{position:'absolute', bottom:100, zIndex:10,}}>
+        <TouchableOpacity activeOpacity={0.8} style={styles.ReadWriteBtn} onPress={() => navigation.navigate('Read')}>
+          <Text style={styles.WhiteText}>  방명록 읽기 </Text>
+        </TouchableOpacity>
+        <TouchableOpacity activeOpacity={0.8} style={styles.ReadWriteBtn} onPress={() => navigation.navigate('Write')}>
+          <Text style={styles.WhiteText}>  방명록 쓰기 </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

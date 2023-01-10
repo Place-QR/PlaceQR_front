@@ -1,11 +1,22 @@
 import React from "react";
-import {StyleSheet, View, Text, Button, TouchableOpacity } from "react-native";
+import {StyleSheet, View, Text, Button, TouchableOpacity, Image } from "react-native";
 
 function Scan({navigation}) {
   return (
     <View style={styles.container}>
         <View style={styles.scanner}>
         </View>
+        <Image
+        style={{
+          width:'100%', 
+          height:'40%', 
+          position:'absolute', 
+          zIndex:2,
+          bottom:-55,
+        }}
+        source={require("../../assets/PQRbackIMG4.png")}
+        resizeMode="center"
+        />
         <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={() => navigation.navigate('Scanned')}>
             <Text style={styles.text}>  QR인식 </Text>
         </TouchableOpacity>
@@ -39,6 +50,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent:'center',
         marginTop: 30,
+        position:'absolute',
+        zIndex:10,
+        bottom: 50,
     },
     text: {
         color: '#fff',

@@ -16,10 +16,10 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Scan"
          screenOptions={{
-          headerBackTitleVisible: false,
-          headerStyle: {
-            height: 120,
-          }
+           headerBackTitleVisible: false,
+           headerStyle: {
+             height: 120,
+            }
           }}> 
           <Stack.Screen name="Scan" component={Scan} options={{title: 'Place.QR'}}/>
           <Stack.Screen name="Scanned" component={Scanned} options={{title: 'Place.QR'}}/>
