@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, View, Text, Platform, TextInput, Image,TouchableWithoutFeedback, TouchableOpacity,Keyboard } from "react-native";
+import {StyleSheet, View, Text, Platform, TextInput, Image,TouchableWithoutFeedback, TouchableOpacity, Keyboard } from "react-native";
 
 function Write({navigation}) {
     // const [text, onChangeText] = React.useState("");
