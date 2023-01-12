@@ -61,12 +61,12 @@ function Scan({navigation}) {
         source={require("../../assets/PQRbackIMG4.png")}
         resizeMode="center"
         />
-        {/* <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={() => navigation.navigate('Scanned')}>
+        <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={() => navigation.navigate('Scanned')}>
             <Text style={styles.text}>  QR인식 </Text>
-        </TouchableOpacity> */}
-        <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={() => setScanned(false)}>
-            <Text style={styles.text}>  QR인식  </Text>
         </TouchableOpacity>
+        {/* <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={() => setScanned(false)}>
+            <Text style={styles.text}>  QR인식  </Text>
+        </TouchableOpacity> */}
     </View>
   );
 }
