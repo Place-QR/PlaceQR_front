@@ -15,7 +15,7 @@ export default function App() {
       <StatusBar style="auto" />
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Scan"
-         screenOptions={{
+        screenOptions={{
            headerBackTitleVisible: false,
            headerStyle: {
              height: 120,
