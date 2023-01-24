@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {StyleSheet, View, Text, Button, TouchableOpacity, Image } from "react-native";
+import {StyleSheet, View, Text, Button, TouchableOpacity, Image, Platform } from "react-native";
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import * as Linking from 'expo-linking';
 
@@ -62,7 +62,7 @@ function Scan({navigation}) {
         resizeMode="center"
         />
         <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={() => navigation.navigate('Scanned')}>
-            <Text style={styles.text}>  QR인식 </Text>
+            <Text style={styles.text}>  QR인식  </Text>
         </TouchableOpacity>
         {/* <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={() => setScanned(false)}>
             <Text style={styles.text}>  QR인식  </Text>
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
       height: '70%',
       borderRadius: 15,
       borderStyle: 'solid',
-      borderColor: '#4D5A73',
+      borderColor: '#2C2F40',
       borderWidth: 10,
       
     },
@@ -109,11 +109,11 @@ const styles = StyleSheet.create({
       borderRadius: 20,
     },
     button: {
-        widht: 100,
-        height: 130,
+        widht: Platform.select({ios:100, android:100}),
+        height: Platform.select({ios:130, android: 100}),
         backgroundColor: '#4D5A73',
-        borderColor: '#2F2F40',
-        borderWidth: 10,
+        // borderColor: '#2F2F40',
+        // borderWidth: 10,
         borderRadius: 40,
         alignItems: 'center',
         justifyContent:'center',
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#fff',
-        fontSize: 30,
+        fontSize: Platform.select({ios:30, android: 20}),
         fontWeight: 'bold',
     }
 });

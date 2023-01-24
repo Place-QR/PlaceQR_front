@@ -1,5 +1,6 @@
-import React from "react";
-import {StyleSheet, View, Text, Platform, TextInput, Image,TouchableWithoutFeedback, TouchableOpacity, Keyboard } from "react-native";
+import React, { useState } from "react";
+import {StyleSheet, View, Text, Platform, TextInput, Image,TouchableWithoutFeedback, TouchableOpacity, Keyboard,Pressable } from "react-native";
+import * as ImagePicker from 'expo-image-picker';
 
 function Write({navigation}) {
     // const [text, onChangeText] = React.useState("");
@@ -18,6 +19,53 @@ function Write({navigation}) {
             [keyvalue]: e
         });
     };
+
+    //ImagePicker
+    const [imageUrl, setImageUrl] = useState('');
+    //현재 이미지 주소
+
+    const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions();
+    // 권한 요청을 위한 hooks
+
+    const uploadImage = async () => {
+        if(!status?.granted) {
+            const permission = await requestPermission();
+            if(!permission.granted) {
+                return null;
+            }
+        } // 권한 확인 코드
+
+        // 이미지 업로드 기능
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: false,
+            qulity: 1,
+            aspect: [1, 1]
+        });
+        if(result.canceled) {
+            return null;
+        }
+        console.log(result);
+        setImageUrl(result.assets[0].uri);
+
+        // 서버에 요청 보내기
+        const localUri = result.assets[0].uri;
+        const filename = localUri.split('/').pop();
+        const match = /\.(\w+)$/.exec(filename ?? '');
+        const type = match ? `image/${match[1]}` : `image`;
+        const formData = new formData();
+        formData.append('image', {uri: localUri, name: filename, type});
+
+        await axios({
+            method: 'post',
+            // url '{API 주소}',
+            headers: {
+                'content-type': 'multipart/form-data',
+            },
+            data: formData
+        })
+    };
+
   return (
       <View style={styles.container}>
         <Image
@@ -70,7 +118,27 @@ function Write({navigation}) {
                     placeholderTextColor="#cfcfcf"
                     textAlign="left"
                     multiline={true}
-                    />
+                >
+                    {imageUrl && <Image source={{uri: imageUrl}} style={{width:200, height:200}}/>}
+                </TextInput>
+                <View style={{width:'100%', height:'10%',position:'relative',}}>
+                    <Pressable 
+                        style={{width:'10%', height:'80%',position:'absolute',
+                        left: '8%',}}
+                        onPress={uploadImage}
+                    >
+                        <Image 
+                            style={{
+                                width:'100%',
+                                height:'90%',
+                            }}
+                            source={require("../../assets/image.png")}
+                        />
+                        
+                    </Pressable>
+
+                </View>
+
             </View>
         </TouchableWithoutFeedback>
         <TouchableOpacity style={styles.submitBtn} activeOpacity={0.8} onPress={() => navigation.navigate('Scanned')}>
@@ -87,9 +155,9 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     formContainer: {
-        width: 350,
-        height: 550,
-        backgroundColor: '#4D5A73',
+        width: Platform.select({ios:350, android:340}),
+        height: Platform.select({ios:550, android:500}),
+        backgroundColor: '#2C2F40',
         // marginTop: 5,
         alignItems: 'center',
         borderRadius: 20,
@@ -107,7 +175,7 @@ const styles = StyleSheet.create({
                 elevation: 3,
             }
         }),
-        position:'absolute',
+        // position:'absolute',
         zIndex:10,
     },
     placeTitle: {
@@ -119,7 +187,7 @@ const styles = StyleSheet.create({
     },
     input: {
         width: 297,
-        height: 60,
+        height: Platform.select({ios:60, android:45}),
         fontSize: 20,
         fontWeight: 'bold',
         color:'#cfcfcf',
@@ -132,29 +200,35 @@ const styles = StyleSheet.create({
     },
     longInput: {
         width: 297,
-        height: 210,
+        height: Platform.select({ios: 210, android: 200}),
+
         fontSize: 20,
         fontWeight: 'bold',
+
         color:'#cfcfcf',
         backgroundColor: '#fff',
+
         margin: 0,
         marginBottom: 12,
         padding: 0,
         paddingLeft: 15,
         paddingTop: 15,
         borderRadius: 15,
+
         textAlignVertical:"top",
+
+        flexShrink:1,
     },
     submitBtn: {
         width: 250,
-        height: 65,
-        backgroundColor: '#4D5A73',
+        height: Platform.select({ios: 65, android:50}),
+        backgroundColor: '#2C2F40',
         borderRadius: 20,
         alignItems: 'center',
         justifyContent:'center',
-        marginBottom: 20,
-        position: 'absolute',
-        bottom: 30,
+        marginTop: Platform.select({ios:30, android:10}),
+        // position: 'absolute',
+        bottom: Platform.select({ios:0, android:0}),
         zIndex: 10,
     },
     WhiteText:{

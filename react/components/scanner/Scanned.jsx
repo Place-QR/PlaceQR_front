@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
+import {StyleSheet, View, Text, TouchableOpacity, Image, Platform } from "react-native";
 
 function Scanned({navigation}) {
   return (
@@ -20,7 +20,7 @@ function Scanned({navigation}) {
       <View style={styles.profileImg}>
         <Text style={styles.textBold}>프로필{"\n"}이미지</Text>
       </View>
-      <View style={{position:'absolute', bottom:100, zIndex:10,}}>
+      <View style={styles.btns}>
         <TouchableOpacity activeOpacity={0.8} style={styles.ReadWriteBtn} onPress={() => navigation.navigate('Read')}>
           <Text style={styles.WhiteText}>  방명록 읽기 </Text>
         </TouchableOpacity>
@@ -39,13 +39,13 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     placeTitle: {
-      fontSize: 40,
+      fontSize: Platform.select({ios: 40, android: 30}),
       fontWeight: 'bold',
-      color: '#4D5A73',
+      color: '#2C2F40',
       textDecorationLine: 'underline'
     },
     textBold: {
-      fontSize: 36,
+      fontSize: Platform.select({ios: 36, android: 24}),
       fontWeight: 'bold',
     },
     profileImg:{
@@ -53,25 +53,30 @@ const styles = StyleSheet.create({
       height: 186,
       backgroundColor: '#DAD8D8',
       borderStyle: 'solid',
-      borderColor: '#4D5A73',
+      borderColor: '#2C2F40',
       borderWidth: 10,
       borderRadius: 40,
       alignItems: 'center',
       justifyContent:'center',
-      marginTop: 50,
+      marginTop: Platform.select({ios: 50, android:40}),
       marginBottom: 75,
+    },
+    btns: {
+      position:'absolute', 
+      bottom: Platform.select({ios: 100, android: 5}),
+      zIndex:10,
     },
     ReadWriteBtn:{
       width: 344,
       height: 60,
-      backgroundColor: '#4D5A73',
+      backgroundColor: '#2C2F40',
       borderRadius: 20,
       alignItems: 'center',
       justifyContent:'center',
       marginBottom: 20,
     },
     WhiteText:{
-      fontSize: 36,
+      fontSize: Platform.select({ios: 36, android: 28}),
       fontWeight: 'bold',
       color: '#fff',
     }
