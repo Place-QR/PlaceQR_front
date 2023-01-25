@@ -6,6 +6,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Scan from "./components/scanner/Scanner";
 import Scanned from "./components/scanner/Scanned";
 import Write from './components/scanner/Write';
+import Home from './components/screens/Home';
+import LoginPage from './components/screens/LoginPage';
+import R_page from './components/screens/R_page';
+import Qrmake from './components/screens/Qrmake';
+import Qrpage from './components/screens/Qrpage';
 
 const Stack = createStackNavigator();
 
@@ -14,8 +19,8 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar style="auto" />
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Scan"
-        screenOptions={{
+        <Stack.Navigator initialRouteName="Home"
+         screenOptions={{
            headerBackTitleVisible: false,
            headerStyle: {
              height: 120,
@@ -24,6 +29,11 @@ export default function App() {
           <Stack.Screen name="Scan" component={Scan} options={{title: 'Place.QR'}}/>
           <Stack.Screen name="Scanned" component={Scanned} options={{title: 'Place.QR'}}/>
           <Stack.Screen name="Write" component={Write} options={{title: 'Place.QR'}}/>
+          <Stack.Screen name="Home" component={Home} options={{title: 'Place.QR'}} />
+          <Stack.Screen name="LoginPage" component={LoginPage} options={{title: 'Place.QR'}}/>
+          <Stack.Screen name="R_page" component={R_page} options={{title: 'Place.QR'}}/>
+          <Stack.Screen name="Qrmake" component={Qrmake} options={{title: 'Place.QR'}}/>
+          <Stack.Screen name="Qrpage" component={Qrpage} options={{title: 'Place.QR'}}/>
         </Stack.Navigator>
       </NavigationContainer>
     </View>
