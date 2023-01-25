@@ -119,7 +119,7 @@ function Write({navigation}) {
                     textAlign="left"
                     multiline={true}
                 >
-                    {imageUrl && <Image source={{uri: imageUrl}} style={{width:200, height:200}}/>}
+                    {/* {imageUrl && <Image source={{uri: imageUrl}} style={{width:200, height:200}}/>} */}
                 </TextInput>
                 <View style={{width:'100%', height:'10%',position:'relative',}}>
                     <Pressable 

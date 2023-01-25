@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     button: {
         widht: Platform.select({ios:100, android:100}),
         height: Platform.select({ios:130, android: 100}),
-        backgroundColor: '#4D5A73',
+        backgroundColor: '#2C2F40',
         // borderColor: '#2F2F40',
         // borderWidth: 10,
         borderRadius: 40,
