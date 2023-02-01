@@ -49,12 +49,12 @@ export default function Mypagemain({navigation}){
             <Text style={styles.buttontext2}>QR</Text>
           </View>
           <View style={{width:120,height:31,paddingTop:4}}>
-            <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('test')}>
+            <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Qrmake')}>
               <Text style={styles.buttontext4}>QR 코드 생성하기</Text>
             </TouchableOpacity>
           </View>
           <View style={{width:120,height:31,paddingTop:4}}>
-            <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('test')}>
+            <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Scan')}>
               <Text style={styles.buttontext4}>QR 코드 읽기</Text>
             </TouchableOpacity>
           </View>
