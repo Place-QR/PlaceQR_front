@@ -17,8 +17,19 @@ function Scan({navigation}) {
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     // alert(`Bar code with type "${type}" and data "${data}" has been scanned!`);
-    Linking.openURL(`${data}`);
+    // Linking.openURL(`${data}`);
+    // navigation.navigate('Scanned');
+    // const scanData = `${data}`
+    const check = data.substring(8,15);
     
+    if(check == 'qrplace') {
+      navigation.navigate('Scanned',{scanData:`${data}`});
+    }
+    else {
+      Linking.openURL(`${data}`);
+    }
+
+
   };
 
   if (hasPermission === null) {
@@ -46,7 +57,6 @@ function Scan({navigation}) {
               width:'100%',
               height:'100%',
               position: 'absolute',
-
             }}
           />
         </View>
@@ -61,12 +71,12 @@ function Scan({navigation}) {
         source={require("../../assets/PQRbackIMG4.png")}
         resizeMode="center"
         />
-        <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={() => navigation.navigate('Scanned')}>
-            <Text style={styles.text}>  QR인식  </Text>
-        </TouchableOpacity>
-        {/* <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={() => setScanned(false)}>
+        {/* <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={() => navigation.navigate('Scanned')}>
             <Text style={styles.text}>  QR인식  </Text>
         </TouchableOpacity> */}
+        <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={() => setScanned(false)}>
+            <Text style={styles.text}>  QR인식  </Text>
+        </TouchableOpacity>
     </View>
   );
 }
@@ -111,7 +121,7 @@ const styles = StyleSheet.create({
     button: {
         widht: Platform.select({ios:100, android:100}),
         height: Platform.select({ios:130, android: 100}),
-        backgroundColor: '#4D5A73',
+        backgroundColor: '#2C2F40',
         // borderColor: '#2F2F40',
         // borderWidth: 10,
         borderRadius: 40,
