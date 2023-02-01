@@ -4,10 +4,6 @@ import { View,Text,Stylesheet } from 'react-native';//react native에서 view,st
 
 export default function App() {
   return <View style={styles.container}>
-        <View style={styles.city}>
-            <Text>Seoul</Text>
-        </View> 
-        <View style={styles.weather}></View> 
         <StatusBar style="dark"/> 
     </View>
 

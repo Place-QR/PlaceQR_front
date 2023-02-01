@@ -5,7 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Mypagemain from "./components/Screens/Mypagemain";
 import Mygbcal from "./components/Screens/Mygbcal";
-import placemanage from "./components/Screens/placemanage";
+import myplace from "./components/Screens/myplace";
 import readgb from "./components/Screens/readgb";
 import test from "./components/Screens/test";
 
@@ -24,10 +24,10 @@ export default function App() {
              height: 120,
             }
           }}>
-          <Stack.Screen name="Mypagemain" component={Mypagemain} options={{title: '마이페이지'}}/>
-          <Stack.Screen name="Mygbcal" component={Mygbcal} options={{title: '마이페이지'}}/>
-          <Stack.Screen name="placemanage" component={placemanage} options={{title: '내가 남긴 방명록'}}/>
-          <Stack.Screen name="readgb" component={readgb} options={{title: '방명록 리스트'}}/>
+          <Stack.Screen name="Mypagemain" component={Mypagemain} options={{title:'Place.QR'}}/>
+          <Stack.Screen name="Mygbcal" component={Mygbcal} options={{title: '장소이름'}}/>
+          <Stack.Screen name="myplace" component={myplace} options={{title: '내 장소들'}}/>
+          <Stack.Screen name="readgb" component={readgb} options={{title: '방명록 읽기'}}/>
           <Stack.Screen name="test" component={test} options={{title: '테스트'}}/>
         </Stack.Navigator>
       </NavigationContainer>
