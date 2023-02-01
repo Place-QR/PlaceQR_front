@@ -3,11 +3,11 @@ import { StyleSheet, Text, View } from 'react-native';
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Mypagemain from "./components/Screens/Mypagemain";
-import Mygbcal from "./components/Screens/Mygbcal";
-import myplace from "./components/Screens/myplace";
-import readgb from "./components/Screens/readgb";
-import test from "./components/Screens/test";
+import Mypagemain from "./components/part3/Mypagemain";
+import Mygbcal from "./components/part3/Mygbcal";
+import myplace from "./components/part3/myplace";
+import readgb from "./components/part3/readgb";
+import test from "./components/part3/test";
 
 
 const Stack = createStackNavigator();
