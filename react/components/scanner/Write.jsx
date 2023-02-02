@@ -20,7 +20,7 @@ function Write({navigation}) {
         });
     };
 
-    //ImagePicker
+    //ImagePicker    
     const [imageUrl, setImageUrl] = useState('');
     //현재 이미지 주소
 

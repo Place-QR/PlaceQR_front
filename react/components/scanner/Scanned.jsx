@@ -25,7 +25,7 @@ function Scanned({navigation, route}) {
         <Text style={styles.textBold}>프로필{"\n"}이미지</Text>
       </View>
       <View style={styles.btns}>
-        <TouchableOpacity activeOpacity={0.8} style={styles.ReadWriteBtn} onPress={() => navigation.navigate('Read')}>
+        <TouchableOpacity activeOpacity={0.8} style={styles.ReadWriteBtn} onPress={() => navigation.navigate('readgb')}>
           <Text style={styles.WhiteText}>  방명록 읽기 </Text>
         </TouchableOpacity>
         <TouchableOpacity activeOpacity={0.8} style={styles.ReadWriteBtn} onPress={() => navigation.navigate('Write')}>
