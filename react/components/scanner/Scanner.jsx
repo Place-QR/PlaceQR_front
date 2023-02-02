@@ -22,6 +22,7 @@ function Scan({navigation}) {
     // const scanData = `${data}`
     const check = data.substring(8,15);
     
+    //place qr의 qr코드만 인식
     if(check == 'qrplace') {
       navigation.navigate('Scanned',{scanData:`${data}`});
     }
