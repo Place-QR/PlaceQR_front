@@ -3,11 +3,11 @@ import {StyleSheet, View, Text, TouchableOpacity, Image, Platform } from "react-
 
 function Scanned({navigation, route}) {
   // const scanData = navigation.getParam("scanData");
-  const scanDataUrl = route.params.scanData;
+  const scanData = route.params.scanData;
 
   return (
     <View style={styles.container}>
-      {console.log(scanDataUrl)}
+      {console.log(scanData)}
       <Image
         style={{
           width:'100%', 
