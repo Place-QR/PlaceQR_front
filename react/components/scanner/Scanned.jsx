@@ -1,9 +1,13 @@
 import React from "react";
 import {StyleSheet, View, Text, TouchableOpacity, Image, Platform } from "react-native";
 
-function Scanned({navigation}) {
+function Scanned({navigation, route}) {
+  // const scanData = navigation.getParam("scanData");
+  const scanData = route.params.scanData;
+
   return (
     <View style={styles.container}>
+      {console.log(scanData)}
       <Image
         style={{
           width:'100%', 
@@ -21,7 +25,7 @@ function Scanned({navigation}) {
         <Text style={styles.textBold}>프로필{"\n"}이미지</Text>
       </View>
       <View style={styles.btns}>
-        <TouchableOpacity activeOpacity={0.8} style={styles.ReadWriteBtn} onPress={() => navigation.navigate('Read')}>
+        <TouchableOpacity activeOpacity={0.8} style={styles.ReadWriteBtn} onPress={() => navigation.navigate('readgb')}>
           <Text style={styles.WhiteText}>  방명록 읽기 </Text>
         </TouchableOpacity>
         <TouchableOpacity activeOpacity={0.8} style={styles.ReadWriteBtn} onPress={() => navigation.navigate('Write')}>
