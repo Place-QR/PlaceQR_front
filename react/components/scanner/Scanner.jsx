@@ -25,6 +25,7 @@ function Scan({navigation}) {
     //place qr의 qr코드만 인식
     if(check == 'qrplace') {
       navigation.navigate('Scanned',{scanData:`${data}`});
+      // 페이지 이동과 함께 qr code 데이터 넘김
     }
     else {
       Linking.openURL(`${data}`);

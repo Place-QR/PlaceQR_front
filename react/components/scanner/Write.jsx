@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import {StyleSheet, View, Text, Platform, TextInput, Image,TouchableWithoutFeedback, TouchableOpacity, Keyboard,Pressable } from "react-native";
+import React, { useState, useEffect } from "react";
+import {StyleSheet, View, Text, Platform, TextInput, Image,TouchableWithoutFeedback, TouchableOpacity, Keyboard,Pressable, BackHandler } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
+import axios from "axios";
 
-function Write({navigation}) {
+function Write({navigation, route}) {
     // const [text, onChangeText] = React.useState("");
     const [inputs, setInputs] = React.useState({
         name: '',
@@ -48,6 +49,10 @@ function Write({navigation}) {
         console.log(result);
         setImageUrl(result.assets[0].uri);
 
+    };
+
+    const uploadForm = async () => {
+
         // 서버에 요청 보내기
         const localUri = result.assets[0].uri;
         const filename = localUri.split('/').pop();
@@ -55,10 +60,10 @@ function Write({navigation}) {
         const type = match ? `image/${match[1]}` : `image`;
         const formData = new formData();
         formData.append('image', {uri: localUri, name: filename, type});
-
+    
         await axios({
             method: 'post',
-            // url '{API 주소}',
+            url:`${scanData}`,
             headers: {
                 'content-type': 'multipart/form-data',
             },
@@ -66,8 +71,25 @@ function Write({navigation}) {
         })
     };
 
+    const handlePressBack = () => {
+        if(navigation?.canGoBack()) {
+            navigation.goBack()
+            return true
+        }
+        return false
+    };
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', handlePressBack)
+        return () => {
+            BackHandler.removeEventListener('hardwareBackPress', handlePressBack)
+        }
+    },[handlePressBack]);
+
+    const scanData = route.params.scanData;
+
   return (
       <View style={styles.container}>
+        {console.log('write '+ scanData)}
         <Image
             style={{
                 width:'100%', 
@@ -141,7 +163,7 @@ function Write({navigation}) {
 
             </View>
         </TouchableWithoutFeedback>
-        <TouchableOpacity style={styles.submitBtn} activeOpacity={0.8} onPress={() => navigation.navigate('Scanned')}>
+        <TouchableOpacity style={styles.submitBtn} activeOpacity={0.8} onPress={() => {handlePressBack();uploadForm();}}>
             <Text style={styles.WhiteText}> 등록하기 </Text>
         </TouchableOpacity>
     </View>

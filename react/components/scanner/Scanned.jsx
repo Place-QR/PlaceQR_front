@@ -1,9 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {StyleSheet, View, Text, TouchableOpacity, Image, Platform } from "react-native";
+import axios from "axios";
 
 function Scanned({navigation, route}) {
-  // const scanData = navigation.getParam("scanData");
   const scanData = route.params.scanData;
+  
+  const [placeData, setPlaceData] = useState();
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get(`${scanData}`);
+        setPlaceData(response.data);
+      }
+      catch(error) {
+        console.log(error);
+      }
+    };
+    getData();
+  },[]);
 
   return (
     <View style={styles.container}>
@@ -19,7 +34,9 @@ function Scanned({navigation, route}) {
         source={require("../../assets/PQRbackIMG4.png")}
         resizeMode="center"
         />
-      <Text style={styles.placeTitle}>{"\n"}장소 이름</Text>
+      {placeData && 
+        <Text style={styles.placeTitle}>{"\n"}{placeData.title}</Text>
+      }
       <Text style={styles.textBold}>방문하셨어요!</Text>
       <View style={styles.profileImg}>
         <Text style={styles.textBold}>프로필{"\n"}이미지</Text>
@@ -28,7 +45,7 @@ function Scanned({navigation, route}) {
         <TouchableOpacity activeOpacity={0.8} style={styles.ReadWriteBtn} onPress={() => navigation.navigate('readgb')}>
           <Text style={styles.WhiteText}>  방명록 읽기 </Text>
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.8} style={styles.ReadWriteBtn} onPress={() => navigation.navigate('Write')}>
+        <TouchableOpacity activeOpacity={0.8} style={styles.ReadWriteBtn} onPress={() => navigation.navigate('Write', {scanData:`${scanData}`})}>
           <Text style={styles.WhiteText}>  방명록 쓰기 </Text>
         </TouchableOpacity>
       </View>
