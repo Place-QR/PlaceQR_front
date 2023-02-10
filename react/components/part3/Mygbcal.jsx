@@ -7,6 +7,7 @@ import RNCalendarEvents from "react-native-calendar-events";
 import Icon from 'react-native-vector-icons/AntDesign';
 //import EventCalendar from 'react-native-events-calendar';
 import moment from 'moment';
+import axios from 'axios';
 
 LocaleConfig.locales['fr'] = {
   monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],

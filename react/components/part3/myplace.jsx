@@ -2,8 +2,29 @@ import React from "react";
 import {StyleSheet,Button,View,TouchableOpacity, Text,Alert, Image} from "react-native";
 import Constants from 'expo-constants';
 import { ScrollView } from 'react-native';
+import axios from 'axios';
 
+// const myplace = axios.get({
+//   URL: '',//url 추가
+//   params: {
+//     user_id: `/user?ID=${userId}`,//변수 추가 
+//   },
+// });
+// async function getUser() { // async, await을 사용하는 경우
+//   try {
+//     // 응답 결과(response)를 변수에 저장하거나.. 등 필요한 처리를 해 주면 된다.
+
+//     var userId = 12345;
+//     await axios.get(`/user?ID=${userId}`); // Backtick(`)을 이용해 이렇게 요청할 수도 있다.
+    
+//     console.log(response);
+//   } catch (e) {
+//     // 실패 시 처리
+//     console.error(e);
+//   }
+// }
 export default function myplace({navigation}){
+  
   return(
       <View style ={styles.container}>
         <Image
@@ -35,7 +56,7 @@ export default function myplace({navigation}){
                 />
                 </View>
                 <View style={{width:170,height:110}}>
-                  <View style={{width:170,height:40,justifyContent:"center"}}>
+                  <View style={{width:170,height:40,justifyContent:"center",}}>
                     <Text style={styles.placename}>원주의 자취방</Text>
                   </View>
                   <View style={{width:170,height:35,justifyContent:"center"}}>
