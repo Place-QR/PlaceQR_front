@@ -35,12 +35,14 @@ function Scanned({navigation, route}) {
         resizeMode="center"
         />
       {placeData && 
-        <Text style={styles.placeTitle}>{"\n"}{placeData.title}</Text>
+        <Text style={styles.placeTitle}>{"\n"}{placeData.name}</Text>
       }
       <Text style={styles.textBold}>방문하셨어요!</Text>
-      <View style={styles.profileImg}>
-        <Text style={styles.textBold}>프로필{"\n"}이미지</Text>
-      </View>
+      {placeData && 
+        <View style={styles.profileImg}>
+          <Image source={placeData.photo} alt="" style={{width:'100%', height:'100%'}}/>
+        </View>
+      }
       <View style={styles.btns}>
         <TouchableOpacity activeOpacity={0.8} style={styles.ReadWriteBtn} onPress={() => navigation.navigate('readgb')}>
           <Text style={styles.WhiteText}>  방명록 읽기 </Text>
