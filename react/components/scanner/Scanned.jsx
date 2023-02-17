@@ -22,7 +22,8 @@ function Scanned({navigation, route}) {
 
   return (
     <View style={styles.container}>
-      {console.log(scanData)}
+      {/* {console.log(scanData)} */}
+      {/* {console.log(placeData.photo)} */}
       <Image
         style={{
           width:'100%', 
@@ -43,6 +44,11 @@ function Scanned({navigation, route}) {
           <Image source={placeData.photo} alt="" style={{width:'100%', height:'100%'}}/>
         </View>
       }
+
+        {/* <View style={styles.profileImg}>
+          <Image source={{uri:"https://placeqr.loca.lt/user-uploads/%EB%9D%BC%EA%B3%A0_%EB%A7%90%ED%95%9C%EB%BB%94_%ED%96%88%EB%8B%A4.png"}} alt="" style={{width:'100%', height:'100%'}}/>
+        </View> */}
+
       <View style={styles.btns}>
         <TouchableOpacity activeOpacity={0.8} style={styles.ReadWriteBtn} onPress={() => navigation.navigate('readgb')}>
           <Text style={styles.WhiteText}>  방명록 읽기 </Text>

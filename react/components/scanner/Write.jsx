@@ -100,11 +100,43 @@ function Write({navigation, route}) {
 
     const postTest = async() => {
         try{
-            await axios.post("https://placeqr.loca.li/api/vi/comments", {
-                "description": "sdfsdfsd",
-                "user": 1,
-                "place": 1
+            // 서버에 요청 보내기
+            const localUri = result.assets[0].uri;
+            const filename = localUri.split('/').pop();
+            const match = /\.(\w+)$/.exec(filename ?? '');
+            const type = match ? `image/${match[1]}` : `image`;
+            const formData = new formData();
+
+            let dataset = {
+                description: `${inputs.talk}`,
+                name:`${inputs.name}`,
+                relation:`${inputs.relation}`,
+                contact:`${inputs.phone}`,
+                user: 1,
+                place: 1
+
+            }
+
+            formData.append("data", JSON.stringify(dataset)); // JSON 형식으로 파싱 후 추가
+            // formData.append('photo', {uri: localUri, name: filename, type});
+
+            await axios({
+                method: 'post',
+                url:'https://placeqr.loca.lt/api/v1/comments/',
+                headers: {
+                    'content-type': 'multipart/form-data',
+                },
+                data: formData
             })
+
+            // await axios.post("https://placeqr.loca.lt/api/v1/comments/", {
+            //     description: `${inputs.talk}`,
+            //     name:`${inputs.name}`,
+            //     relation:`${inputs.relation}`,
+            //     contact:`${inputs.phone}`,
+            //     user: 1,
+            //     place: 1
+            // })
         }
         catch(e){
             console.log(e);
@@ -145,9 +177,9 @@ function Write({navigation, route}) {
                 {placeData && 
                     <Text style={styles.placeTitle}>{placeData.name}</Text>
                 }
-                {placeData && 
+                {/* {placeData && 
                     <Text style={styles.placeTitle}>{placeData.pk}</Text>
-                }
+                } */}
                 
                 <TextInput 
                     style={styles.input}
@@ -188,7 +220,7 @@ function Write({navigation, route}) {
                 >
                     {/* {imageUrl && <Image source={{uri: imageUrl}} style={{width:200, height:200}}/>} */}
                 </TextInput>
-                <View style={{width:'100%', height:'10%',position:'relative',}}>
+                {/* <View style={{width:'100%', height:'10%',position:'relative',}}>
                     <Pressable 
                         style={{width:'10%', height:'80%',position:'absolute',
                         left: '8%',}}
@@ -204,7 +236,7 @@ function Write({navigation, route}) {
                         
                     </Pressable>
 
-                </View>
+                </View> */}
 
             </View>
         </TouchableWithoutFeedback>
