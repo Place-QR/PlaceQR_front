@@ -41,7 +41,7 @@ function Scanned({navigation, route}) {
       <Text style={styles.textBold}>방문하셨어요!</Text>
       {placeData && 
         <View style={styles.profileImg}>
-          <Image source={placeData.photo} alt="" style={{width:'100%', height:'100%'}}/>
+          <Image source={placeData.photo} alt="" style={{width:'100%', height:'100%', borderRadius:40}}/>
         </View>
       }
 
