@@ -6,6 +6,7 @@ import axios from "axios";
 function Write({navigation, route}) {
     // const [text, onChangeText] = React.useState("");
     const scanData = route.params.scanData;
+    const placeID = route.params.placeID;
 
     const [inputs, setInputs] = React.useState({
         name: '',
@@ -45,98 +46,74 @@ function Write({navigation, route}) {
     const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions();
     // 권한 요청을 위한 hooks
 
-    const uploadImage = async () => {
-        if(!status?.granted) {
-            const permission = await requestPermission();
-            if(!permission.granted) {
-                return null;
-            }
-        } // 권한 확인 코드
+    // const uploadImage = async () => {
+    //     if(!status?.granted) {
+    //         const permission = await requestPermission();
+    //         if(!permission.granted) {
+    //             return null;
+    //         }
+    //     } // 권한 확인 코드
 
-        // 이미지 업로드 기능
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: false,
-            qulity: 1,
-            aspect: [1, 1]
-        });
-        if(result.canceled) {
-            return null;
-        }
-        console.log(result);
-        setImageUrl(result.assets[0].uri);
-
-    };
-
-    // const uploadForm = async () => {
-    //     // const {name, relation, phone, talk} = values;
-
-    //     // 서버에 요청 보내기
-    //     const localUri = result.assets[0].uri;
-    //     const filename = localUri.split('/').pop();
-    //     const match = /\.(\w+)$/.exec(filename ?? '');
-    //     const type = match ? `image/${match[1]}` : `image`;
-    //     const formData = new formData();
-    //     let dataset = {
-    //         // name: inputs.name,
-    //         // relation:inputs.relation,
-    //         // phone: inputs.phone,
-    //         description: "ㄴㄴㅇㅇ",
-    //         user:1,
-    //         place: 1,
+    //     // 이미지 업로드 기능
+    //     const result = await ImagePicker.launchImageLibraryAsync({
+    //         mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    //         allowsEditing: false,
+    //         qulity: 1,
+    //         aspect: [1, 1]
+    //     });
+    //     if(result.canceled) {
+    //         return null;
     //     }
-    //     formData.append("data", JSON.stringify(dataset)); // JSON 형식으로 파싱 후 추가
-    //     // formData.append('photo', {uri: localUri, name: filename, type});
-    
-    //     await axios({
-    //         method: 'post',
-    //         url:'https://placeqr.loca.lt/api/v1/comments',
-    //         headers: {
-    //             'content-type': 'multipart/form-data',
-    //         },
-    //         data: formData
-    //     })
+    //     console.log(result);
+    //     setImageUrl(result.assets[0].uri);
+
     // };
 
     const postTest = async() => {
         try{
             // 서버에 요청 보내기
-            const localUri = result.assets[0].uri;
-            const filename = localUri.split('/').pop();
-            const match = /\.(\w+)$/.exec(filename ?? '');
-            const type = match ? `image/${match[1]}` : `image`;
-            const formData = new formData();
+            // const localUri = result.assets[0].uri;
+            // const filename = localUri.split('/').pop();
+            // const match = /\.(\w+)$/.exec(filename ?? '');
+            // const type = match ? `image/${match[1]}` : `image`;
+            // const formData = new formData();
 
-            let dataset = {
-                description: `${inputs.talk}`,
-                name:`${inputs.name}`,
-                relation:`${inputs.relation}`,
-                contact:`${inputs.phone}`,
-                user: 1,
-                place: 1
-
-            }
-
-            formData.append("data", JSON.stringify(dataset)); // JSON 형식으로 파싱 후 추가
-            // formData.append('photo', {uri: localUri, name: filename, type});
-
-            await axios({
-                method: 'post',
-                url:'https://placeqr.loca.lt/api/v1/comments/',
-                headers: {
-                    'content-type': 'multipart/form-data',
-                },
-                data: formData
-            })
-
-            // await axios.post("https://placeqr.loca.lt/api/v1/comments/", {
+            // let dataset = {
             //     description: `${inputs.talk}`,
             //     name:`${inputs.name}`,
             //     relation:`${inputs.relation}`,
             //     contact:`${inputs.phone}`,
-            //     user: 1,
-            //     place: 1
+            //     user: null,
+            //     place: `${placeID}`
+
+            // }
+
+            // formData.append("data", JSON.stringify(dataset)); // JSON 형식으로 파싱 후 추가
+            // // formData.append('photo', {uri: localUri, name: filename, type});
+
+            // await axios({
+            //     method: 'post',
+            //     url:'https://www.placeqr.store/comments/',
+            //     headers: {
+            //         'content-type': 'multipart/form-data',
+            //     },
+            //     data: formData
             // })
+
+            await axios.post("https://www.placeqr.store/comments/", {
+                // description: 'dddddd',
+                // name: 'dddddd',
+                // relation: 'adsfasdfg',
+                // contact: 'asdgasdfasdf',
+                // user: null,
+                // place: 1
+                description: `${inputs.talk}`,
+                name:`${inputs.name}`,
+                relation:`${inputs.relation}`,
+                contact:`${inputs.phone}`,
+                user: null,
+                place: `${placeID}`
+            })
         }
         catch(e){
             console.log(e);
@@ -160,7 +137,8 @@ function Write({navigation, route}) {
 
   return (
       <View style={styles.container}>
-        {console.log('write '+ scanData)}
+        {/* {console.log('write '+ scanData)} */}
+        {console.log(placeID)}
         <Image
             style={{
                 width:'100%', 

@@ -20,10 +20,10 @@ function Scan({navigation}) {
     // Linking.openURL(`${data}`);
     // navigation.navigate('Scanned');
     // const scanData = `${data}`
-    const check = data.substring(15,22);
+    const check = data.substring(12,19);
     
     //place qr의 qr코드만 인식
-    if(check == 'qrplace') {
+    if(check == 'placeqr') {
       navigation.navigate('Scanned',{scanData:`${data}`});
       // 페이지 이동과 함께 qr code 데이터 넘김
     }

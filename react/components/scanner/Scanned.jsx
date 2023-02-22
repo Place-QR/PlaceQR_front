@@ -6,6 +6,8 @@ function Scanned({navigation, route}) {
   const scanData = route.params.scanData;
   
   const [placeData, setPlaceData] = useState();
+  
+  const placeID = scanData.substring(33);
 
   useEffect(() => {
     const getData = async () => {
@@ -14,7 +16,7 @@ function Scanned({navigation, route}) {
         setPlaceData(response.data);
       }
       catch(error) {
-        console.log(error);
+        // console.log(error);
       }
     };
     getData();
@@ -23,7 +25,8 @@ function Scanned({navigation, route}) {
   return (
     <View style={styles.container}>
       {/* {console.log(scanData)} */}
-      {/* {console.log(placeData.photo)} */}
+      {/* {console.log(scanData.substring(33))} */}
+      {/* {placeData && console.log(placeData.photo)} */}
       <Image
         style={{
           width:'100%', 
@@ -41,7 +44,7 @@ function Scanned({navigation, route}) {
       <Text style={styles.textBold}>방문하셨어요!</Text>
       {placeData && 
         <View style={styles.profileImg}>
-          <Image source={placeData.photo} alt="" style={{width:'100%', height:'100%', borderRadius:40}}/>
+          <Image source={{uri : placeData.photo}} alt="" style={{width:'100%', height:'100%', borderRadius:30}}/>
         </View>
       }
 
@@ -50,10 +53,10 @@ function Scanned({navigation, route}) {
         </View> */}
 
       <View style={styles.btns}>
-        <TouchableOpacity activeOpacity={0.8} style={styles.ReadWriteBtn} onPress={() => navigation.navigate('readgb')}>
+        <TouchableOpacity activeOpacity={0.8} style={styles.ReadWriteBtn} onPress={() => navigation.navigate('QrToRead', {scanData:`${scanData}`})}>
           <Text style={styles.WhiteText}>  방명록 읽기 </Text>
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.8} style={styles.ReadWriteBtn} onPress={() => navigation.navigate('Write', {scanData:`${scanData}`})}>
+        <TouchableOpacity activeOpacity={0.8} style={styles.ReadWriteBtn} onPress={() => navigation.navigate('Write', {scanData:`${scanData}`, placeID: `${placeID}`})}>
           <Text style={styles.WhiteText}>  방명록 쓰기 </Text>
         </TouchableOpacity>
       </View>
