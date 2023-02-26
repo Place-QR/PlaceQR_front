@@ -47,11 +47,15 @@ export default function QrToRead({navigation, route}){
         <View style={[styles.gbback1,{marginTop:-20}]}>
           <View style={[styles.gbback2]}>
             <View style={{width:284,height:35,alignItems:'left',marginTop:10,}}> 
-              <Text style={[styles.gbtext1,{color:'#626262'}]}>글쓴이, 글을 쓴 시각</Text>
+              <Text style={[styles.gbtext1,{color:'#626262'}]}>
+                글쓴이, 글을 쓴 시각
+              </Text>
             </View>
             <ScrollView>
               <View style={{width:284,height:156,alignItems:'left'}}>
-                <Text style={[styles.gbtext2,{color:'#626262'}]}>방명록 내용이 보여집니다.</Text>
+                <Text style={[styles.gbtext2,{color:'#626262'}]}>
+                  방명록 내용이 보여집니다.
+                </Text>
               </View>
             </ScrollView>
           </View>
@@ -76,58 +80,6 @@ export default function QrToRead({navigation, route}){
             )
         )
         }
-          {/* <View style={styles.guestlist}>
-            <View style={{width:116,height:47,marginLeft:30,display:"flex",flexDirection:'row'}}>
-              <View style={{width:58,height:47,paddingTop:11}}>
-                <Text style={styles.name}>이름</Text>
-              </View>
-              <View style={{width:58,height:47,paddingTop:19,paddingLeft:10,alignItems:'left'}}>
-                <Text style={styles.relation}>관계</Text>
-              </View>
-            </View>
-            <View style={{width:116,height:36,marginLeft:30,paddingTop:5}}>
-              <Text style={styles.writetime}>글을 쓴 시각</Text>
-            </View>           
-          </View>
-          <View style={styles.guestlist}>
-            <View style={{width:116,height:47,marginLeft:30,display:"flex",flexDirection:'row'}}>
-              <View style={{width:58,height:47,paddingTop:11}}>
-                <Text style={styles.name}>이름</Text>
-              </View>
-              <View style={{width:58,height:47,paddingTop:19,paddingLeft:10,alignItems:'left'}}>
-                <Text style={styles.relation}>관계</Text>
-              </View>
-            </View>
-            <View style={{width:116,height:36,marginLeft:30,paddingTop:5}}>
-              <Text style={styles.writetime}>글을 쓴 시각</Text>
-            </View>           
-          </View>
-          <View style={styles.guestlist}>
-            <View style={{width:116,height:47,marginLeft:30,display:"flex",flexDirection:'row'}}>
-              <View style={{width:58,height:47,paddingTop:11}}>
-                <Text style={styles.name}>이름</Text>
-              </View>
-              <View style={{width:58,height:47,paddingTop:19,paddingLeft:10,alignItems:'left'}}>
-                <Text style={styles.relation}>관계</Text>
-              </View>
-            </View>
-            <View style={{width:116,height:36,marginLeft:30,paddingTop:5}}>
-              <Text style={styles.writetime}>글을 쓴 시각</Text>
-            </View>           
-          </View>
-          <View style={styles.guestlist}>
-            <View style={{width:116,height:47,marginLeft:30,display:"flex",flexDirection:'row'}}>
-              <View style={{width:58,height:47,paddingTop:11}}>
-                <Text style={styles.name}>이름</Text>
-              </View>
-              <View style={{width:58,height:47,paddingTop:19,paddingLeft:10,alignItems:'left'}}>
-                <Text style={styles.relation}>관계</Text>
-              </View>
-            </View>
-            <View style={{width:116,height:36,marginLeft:30,paddingTop:5}}>
-              <Text style={styles.writetime}>글을 쓴 시각</Text>
-            </View>           
-          </View> */}
         </ScrollView>
       </View>
     </View>
