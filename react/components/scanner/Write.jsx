@@ -89,24 +89,9 @@ function Write({navigation, route}) {
             // }
 
             // formData.append("data", JSON.stringify(dataset)); // JSON 형식으로 파싱 후 추가
-            // // formData.append('photo', {uri: localUri, name: filename, type});
-
-            // await axios({
-            //     method: 'post',
-            //     url:'https://www.placeqr.store/comments/',
-            //     headers: {
-            //         'content-type': 'multipart/form-data',
-            //     },
-            //     data: formData
-            // })
+            // formData.append('photo', {uri: localUri, name: filename, type});
 
             await axios.post("https://www.placeqr.store/comments/", {
-                // description: 'dddddd',
-                // name: 'dddddd',
-                // relation: 'adsfasdfg',
-                // contact: 'asdgasdfasdf',
-                // user: null,
-                // place: 1
                 description: `${inputs.talk}`,
                 name:`${inputs.name}`,
                 relation:`${inputs.relation}`,
@@ -196,25 +181,25 @@ function Write({navigation, route}) {
                     textAlign="left"
                     multiline={true}
                 >
-                    {/* {imageUrl && <Image source={{uri: imageUrl}} style={{width:200, height:200}}/>} */}
                 </TextInput>
                 {/* <View style={{width:'100%', height:'10%',position:'relative',}}>
                     <Pressable 
                         style={{width:'10%', height:'80%',position:'absolute',
                         left: '8%',}}
                         onPress={uploadImage}
-                    >
+                        >
                         <Image 
                             style={{
                                 width:'100%',
                                 height:'90%',
                             }}
                             source={require("../../assets/image.png")}
-                        />
+                            />
                         
                     </Pressable>
 
-                </View> */}
+                </View>
+                {imageUrl && <Image source={{uri: imageUrl}} style={{width:100, height:100}}/>} */}
 
             </View>
         </TouchableWithoutFeedback>
