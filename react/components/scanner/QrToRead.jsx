@@ -70,9 +70,8 @@ export default function QrToRead({navigation, route}){
             </ScrollView>
           </View>
         </View>
-        
-        {/* <CommentView name="글쓴이" time="시간" comment="방명록 내용"/> */}
       </View>
+      
       <View style={{width:344,height:359}}>
         <ScrollView>
         {commentsData && commentsData.map((e) => (
