@@ -46,28 +46,28 @@ function Write({navigation, route}) {
     const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions();
     // 권한 요청을 위한 hooks
 
-    // const uploadImage = async () => {
-    //     if(!status?.granted) {
-    //         const permission = await requestPermission();
-    //         if(!permission.granted) {
-    //             return null;
-    //         }
-    //     } // 권한 확인 코드
+    const uploadImage = async () => {
+        if(!status?.granted) {
+            const permission = await requestPermission();
+            if(!permission.granted) {
+                return null;
+            }
+        } // 권한 확인 코드
 
-    //     // 이미지 업로드 기능
-    //     const result = await ImagePicker.launchImageLibraryAsync({
-    //         mediaTypes: ImagePicker.MediaTypeOptions.Images,
-    //         allowsEditing: false,
-    //         qulity: 1,
-    //         aspect: [1, 1]
-    //     });
-    //     if(result.canceled) {
-    //         return null;
-    //     }
-    //     console.log(result);
-    //     setImageUrl(result.assets[0].uri);
+        // 이미지 업로드 기능
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: false,
+            qulity: 1,
+            aspect: [1, 1]
+        });
+        if(result.canceled) {
+            return null;
+        }
+        console.log(result);
+        setImageUrl(result.assets[0].uri);
 
-    // };
+    };
 
     const postTest = async() => {
         try{

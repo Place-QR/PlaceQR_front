@@ -3,96 +3,26 @@ import React, { Component, useEffect, useState } from 'react'
 import {StyleSheet,View,Text,Image,TouchableOpacity} from 'react-native';
 import { ScrollView } from 'react-native';
 
-import CommentView from './CommentView';
-
-export default function QrToRead({navigation, route}){
-    const scanData = route.params.scanData;
-  
-    const [placeData, setPlaceData] = useState();
-    const [commentsData, setCommentsData] = useState();
-
-    const [viewComment, setViewComment] = useState();
-
-    useEffect(() => {
-        const getData = async () => {
-          try {
-            const response = await axios.get(`${scanData}`);
-            setPlaceData(response.data);
-
-            const commentsLoad = await axios.get(`${scanData}` + '/comments/');
-            setCommentsData(commentsLoad.data);
-          }
-          catch(error) {
-            // console.log(error);
-          }
-        };
-        getData();
-      },[]);
+export default function CommentView(props){
 
   return(
-    <View style ={styles.container}>
-      <Image
-            style={{
-                width:'100%', 
-                height:'40%', 
-                position:'absolute', 
-                zIndex:0,
-                bottom:-55,
-            }}
-            source={require("../../assets/PQRbackIMG4.png")}
-            resizeMode="center"
-            />
-      <View style={{width:344,height:326,borderBottomColor:"#000000",alignItems:"center",justifyContent:"center"}}>
-        <View style={[styles.place,{zIndex:1}]}>
-            { placeData && 
-                <Text style={styles.placename}>{placeData.name}</Text>
-            }
-        </View>
-        {viewComment &&
         <View style={[styles.gbback1,{marginTop:-20}]}>
           <View style={[styles.gbback2]}>
             <View style={{width:284,height:35,alignItems:'left',marginTop:10,}}> 
               <Text style={[styles.gbtext1,{color:'#626262'}]}>
-                {viewComment.name}, {viewComment.created_at}
+                {props.name}, {props.time}
               </Text>
             </View>
             <ScrollView>
               <View style={{width:284,height:156,alignItems:'left'}}>
                 <Text style={[styles.gbtext2,{color:'#626262'}]}>
-                  {viewComment.description}
+                  {props.comment}
                 </Text>
               </View>
             </ScrollView>
           </View>
         </View>
-        }
-        {/* <CommentView name="글쓴이" time="시간" comment="방명록 내용"/> */}
-      </View>
-      <View style={{width:344,height:359}}>
-        <ScrollView>
-        {commentsData && commentsData.map((e) => (
-          <TouchableOpacity onPress={() => setViewComment(e)}>
-            <View key={e} style={styles.guestlist}>
-                <View  style={{width:116,height:47,marginLeft:30,display:"flex",flexDirection:'row'}}>
-                    <View style={{width:58,height:47,paddingTop:11}}>
-                        <Text style={styles.name}>{e.name}</Text>
-                    </View>
-                    <View style={{width:58,height:47,paddingTop:19,paddingLeft:10,alignItems:'left'}}>
-                        <Text style={styles.relation}>{e.relation}</Text>
-                    </View>
-                </View>
-                <View style={{width:116,height:36,marginLeft:30,paddingTop:5}}>
-                    <Text style={styles.writetime}>{e.created_at}</Text>
-                </View>           
-            </View>
-          </TouchableOpacity>
-            )
-          )
-        }
-        </ScrollView>
-      </View>
-    </View>
-  )
+    )
 }
 
 
