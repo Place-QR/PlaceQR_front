@@ -1,8 +1,25 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import {StyleSheet,View,Text,Image,TouchableOpacity} from 'react-native';
 import { ScrollView } from 'react-native';
+import axios from 'axios';
+//myplace에서 데이터 받아와서 comment list, comment 정보 불러오기, list와 comment 내용 동시에 화면에 불러오기, get, map 하기
+export default function readgb({navigation, route}){
+   const [commentlist,getCommentlist,touchcomment,setTouchcomment] = useState();
 
-export default function readgb({navigation}){
+  const getId = async () => {
+        try {
+          const response = await axios.get(`${data}`);
+          getOwnerid(response);
+        }
+        catch(error) {
+          console.log(error);
+        }
+      };
+  // 첫 렌더링 때 getData() 한 번 실행    
+  useEffect(() => { 
+    getId();
+  },[]);
+
   return(
     <View style ={styles.container}>
       <Image
@@ -16,9 +33,10 @@ export default function readgb({navigation}){
             source={require("../../assets/PQRbackIMG4.png")}
             resizeMode="center"
             />
+      {/*특정 장소의 클릭한 방명록의 내용을 보여준다*/}
       <View style={{width:344,height:326,borderBottomColor:"#000000",alignItems:"center",justifyContent:"center"}}>
         <View style={[styles.place,{zIndex:1}]}>
-          <Text style={styles.placename}>희영이집</Text>
+          <Text key={user.pk} style={styles.placename}>{placeData.name}</Text>
         </View>
         <View style={[styles.gbback1,{marginTop:-20}]}>
           <View style={[styles.gbback2]}>
@@ -35,6 +53,8 @@ export default function readgb({navigation}){
       </View>
       <View style={{width:344,height:359}}>
         <ScrollView>
+          {/* map 함수를 이용하여 방명록 데이터 나열 - 특정 장소의 방명록만 나열 */}
+          {news.filter(user => user.category == 'politic').map(user => (
           <View style={styles.guestlist}>
             <View style={{width:116,height:47,marginLeft:30,display:"flex",flexDirection:'row'}}>
               <View style={{width:58,height:47,paddingTop:11}}>
@@ -48,58 +68,7 @@ export default function readgb({navigation}){
               <Text style={styles.writetime}>글을 쓴 시각</Text>
             </View>           
           </View>
-          <View style={styles.guestlist}>
-            <View style={{width:116,height:47,marginLeft:30,display:"flex",flexDirection:'row'}}>
-              <View style={{width:58,height:47,paddingTop:11}}>
-                <Text style={styles.name}>이름</Text>
-              </View>
-              <View style={{width:58,height:47,paddingTop:19,paddingLeft:10,alignItems:'left'}}>
-                <Text style={styles.relation}>관계</Text>
-              </View>
-            </View>
-            <View style={{width:116,height:36,marginLeft:30,paddingTop:5}}>
-              <Text style={styles.writetime}>글을 쓴 시각</Text>
-            </View>           
-          </View>
-          <View style={styles.guestlist}>
-            <View style={{width:116,height:47,marginLeft:30,display:"flex",flexDirection:'row'}}>
-              <View style={{width:58,height:47,paddingTop:11}}>
-                <Text style={styles.name}>이름</Text>
-              </View>
-              <View style={{width:58,height:47,paddingTop:19,paddingLeft:10,alignItems:'left'}}>
-                <Text style={styles.relation}>관계</Text>
-              </View>
-            </View>
-            <View style={{width:116,height:36,marginLeft:30,paddingTop:5}}>
-              <Text style={styles.writetime}>글을 쓴 시각</Text>
-            </View>           
-          </View>
-          <View style={styles.guestlist}>
-            <View style={{width:116,height:47,marginLeft:30,display:"flex",flexDirection:'row'}}>
-              <View style={{width:58,height:47,paddingTop:11}}>
-                <Text style={styles.name}>이름</Text>
-              </View>
-              <View style={{width:58,height:47,paddingTop:19,paddingLeft:10,alignItems:'left'}}>
-                <Text style={styles.relation}>관계</Text>
-              </View>
-            </View>
-            <View style={{width:116,height:36,marginLeft:30,paddingTop:5}}>
-              <Text style={styles.writetime}>글을 쓴 시각</Text>
-            </View>           
-          </View>
-          <View style={styles.guestlist}>
-            <View style={{width:116,height:47,marginLeft:30,display:"flex",flexDirection:'row'}}>
-              <View style={{width:58,height:47,paddingTop:11}}>
-                <Text style={styles.name}>이름</Text>
-              </View>
-              <View style={{width:58,height:47,paddingTop:19,paddingLeft:10,alignItems:'left'}}>
-                <Text style={styles.relation}>관계</Text>
-              </View>
-            </View>
-            <View style={{width:116,height:36,marginLeft:30,paddingTop:5}}>
-              <Text style={styles.writetime}>글을 쓴 시각</Text>
-            </View>           
-          </View>
+          ))}
         </ScrollView>
       </View>
     </View>

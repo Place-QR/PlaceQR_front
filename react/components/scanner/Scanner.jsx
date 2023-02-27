@@ -23,8 +23,9 @@ function Scan({navigation}) {
     const check = data.substring(8,15);
     
     //place qr의 qr코드만 인식
-    if(check == 'qrplace') {
+    if(check == 'placeqr') {
       navigation.navigate('Scanned',{scanData:`${data}`});
+      // 페이지 이동과 함께 qr code 데이터 넘김
     }
     else {
       Linking.openURL(`${data}`);

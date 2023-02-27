@@ -1,15 +1,33 @@
-import React, { useState } from "react";
-import {StyleSheet, View, Text, Platform, TextInput, Image,TouchableWithoutFeedback, TouchableOpacity, Keyboard,Pressable } from "react-native";
+import React, { useState, useEffect } from "react";
+import {StyleSheet, View, Text, Platform, TextInput, Image,TouchableWithoutFeedback, TouchableOpacity, Keyboard,Pressable, BackHandler } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
+import axios from "axios";
 
-function Write({navigation}) {
+function Write({navigation, route}) {
     // const [text, onChangeText] = React.useState("");
+    const scanData = route.params.scanData;
+
     const [inputs, setInputs] = React.useState({
         name: '',
         relation: '',
         phone: '',
         talk: '',
     });
+
+    const [placeData, setPlaceData] = useState();
+
+    useEffect(() => {
+        const getData = async () => {
+        try {
+            const response = await axios.get(`${scanData}`);
+            setPlaceData(response.data);
+        }
+        catch(error) {
+            console.log(error);
+        }
+        };
+        getData();
+    },[]);
 
     const {name, relation, phone, talk} = inputs;
 
@@ -48,26 +66,69 @@ function Write({navigation}) {
         console.log(result);
         setImageUrl(result.assets[0].uri);
 
-        // 서버에 요청 보내기
-        const localUri = result.assets[0].uri;
-        const filename = localUri.split('/').pop();
-        const match = /\.(\w+)$/.exec(filename ?? '');
-        const type = match ? `image/${match[1]}` : `image`;
-        const formData = new formData();
-        formData.append('image', {uri: localUri, name: filename, type});
-
-        await axios({
-            method: 'post',
-            // url '{API 주소}',
-            headers: {
-                'content-type': 'multipart/form-data',
-            },
-            data: formData
-        })
     };
+
+    // const uploadForm = async () => {
+    //     // const {name, relation, phone, talk} = values;
+
+    //     // 서버에 요청 보내기
+    //     const localUri = result.assets[0].uri;
+    //     const filename = localUri.split('/').pop();
+    //     const match = /\.(\w+)$/.exec(filename ?? '');
+    //     const type = match ? `image/${match[1]}` : `image`;
+    //     const formData = new formData();
+    //     let dataset = {
+    //         // name: inputs.name,
+    //         // relation:inputs.relation,
+    //         // phone: inputs.phone,
+    //         description: "ㄴㄴㅇㅇ",
+    //         user:1,
+    //         place: 1,
+    //     }
+    //     formData.append("data", JSON.stringify(dataset)); // JSON 형식으로 파싱 후 추가
+    //     // formData.append('photo', {uri: localUri, name: filename, type});
+    
+    //     await axios({
+    //         method: 'post',
+    //         url:'https://placeqr.loca.lt/api/v1/comments',
+    //         headers: {
+    //             'content-type': 'multipart/form-data',
+    //         },
+    //         data: formData
+    //     })
+    // };
+
+    const postTest = async() => {
+        try{
+            await axios.post("https://placeqr.loca.li/api/vi/comments", {
+                "description": "sdfsdfsd",
+                "user": 1,
+                "place": 1
+            })
+        }
+        catch(e){
+            console.log(e);
+        }
+    };
+
+    const handlePressBack = () => {
+        if(navigation?.canGoBack()) {
+            navigation.goBack()
+            return true
+        }
+        return false
+    };
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', handlePressBack)
+        return () => {
+            BackHandler.removeEventListener('hardwareBackPress', handlePressBack)
+        }
+    },[handlePressBack]);
+
 
   return (
       <View style={styles.container}>
+        {console.log('write '+ scanData)}
         <Image
             style={{
                 width:'100%', 
@@ -81,7 +142,13 @@ function Write({navigation}) {
             />
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.formContainer}>
-                <Text style={styles.placeTitle}>OOO의 집</Text>
+                {placeData && 
+                    <Text style={styles.placeTitle}>{placeData.name}</Text>
+                }
+                {placeData && 
+                    <Text style={styles.placeTitle}>{placeData.pk}</Text>
+                }
+                
                 <TextInput 
                     style={styles.input}
                     onChangeText={(e) => onChange("name", e)}
@@ -141,7 +208,7 @@ function Write({navigation}) {
 
             </View>
         </TouchableWithoutFeedback>
-        <TouchableOpacity style={styles.submitBtn} activeOpacity={0.8} onPress={() => navigation.navigate('Scanned')}>
+        <TouchableOpacity style={styles.submitBtn} activeOpacity={0.8} onPress={() => {handlePressBack();postTest();}}>
             <Text style={styles.WhiteText}> 등록하기 </Text>
         </TouchableOpacity>
     </View>
