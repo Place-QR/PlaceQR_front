@@ -11,7 +11,12 @@ export default function QrToRead({navigation, route}){
     const [placeData, setPlaceData] = useState();
     const [commentsData, setCommentsData] = useState();
 
-    const [viewComment, setViewComment] = useState();
+    const [comment, setComment] = useState({});
+    const getComment = (e) => {
+      // console.log("e is: ", e);
+      setComment(e);
+      // console.log(comment);
+    }
 
     useEffect(() => {
         const getData = async () => {
@@ -32,57 +37,57 @@ export default function QrToRead({navigation, route}){
   return(
     <View style ={styles.container}>
       <Image
-            style={{
-                width:'100%', 
-                height:'40%', 
-                position:'absolute', 
-                zIndex:0,
-                bottom:-55,
-            }}
-            source={require("../../assets/PQRbackIMG4.png")}
-            resizeMode="center"
-            />
+        style={{
+            width:'100%', 
+            height:'40%', 
+            position:'absolute', 
+            zIndex:0,
+            bottom:-55,
+        }}
+        source={require("../../assets/PQRbackIMG4.png")}
+        resizeMode="center"
+      />
       <View style={{width:344,height:326,borderBottomColor:"#000000",alignItems:"center",justifyContent:"center"}}>
         <View style={[styles.place,{zIndex:1}]}>
             { placeData && 
                 <Text style={styles.placename}>{placeData.name}</Text>
             }
         </View>
-        {viewComment &&
+        
         <View style={[styles.gbback1,{marginTop:-20}]}>
           <View style={[styles.gbback2]}>
             <View style={{width:284,height:35,alignItems:'left',marginTop:10,}}> 
               <Text style={[styles.gbtext1,{color:'#626262'}]}>
-                {viewComment.name}, {viewComment.created_at}
+                {comment.name == null ? ("글쓴이"):(comment.name)} , {comment.created_at==null ? ("작성시간"):(comment.created_at.substring(0,10))}
               </Text>
             </View>
             <ScrollView>
-              <View style={{width:284,height:156,alignItems:'left'}}>
+              <View style={{width:284, alignItems:'left'}}>
                 <Text style={[styles.gbtext2,{color:'#626262'}]}>
-                  {viewComment.description}
+                  {comment.description == null ? ("방명록이 표시됩니다."):(comment.description)}
                 </Text>
               </View>
             </ScrollView>
           </View>
         </View>
-        }
+        
         {/* <CommentView name="글쓴이" time="시간" comment="방명록 내용"/> */}
       </View>
       <View style={{width:344,height:359}}>
         <ScrollView>
         {commentsData && commentsData.map((e) => (
-          <TouchableOpacity onPress={() => setViewComment(e)}>
+          <TouchableOpacity onPress={() => getComment(e)}>
             <View key={e} style={styles.guestlist}>
                 <View  style={{width:116,height:47,marginLeft:30,display:"flex",flexDirection:'row'}}>
-                    <View style={{width:58,height:47,paddingTop:11}}>
+                    <View style={{width:70,height:47,paddingTop:11}}>
                         <Text style={styles.name}>{e.name}</Text>
                     </View>
                     <View style={{width:58,height:47,paddingTop:19,paddingLeft:10,alignItems:'left'}}>
                         <Text style={styles.relation}>{e.relation}</Text>
                     </View>
                 </View>
-                <View style={{width:116,height:36,marginLeft:30,paddingTop:5}}>
-                    <Text style={styles.writetime}>{e.created_at}</Text>
+                <View style={{width:110,height:36,marginLeft:30,paddingTop:5}}>
+                    <Text style={styles.writetime}>{e.created_at.substring(0,10)}</Text>
                 </View>           
             </View>
           </TouchableOpacity>
@@ -193,7 +198,7 @@ const styles=StyleSheet.create({
     fontWeight:'bold',
   },
   gbtext2:{
-    textAlign:'center',
+    textAlign:'left',
     // paddingVertical:30,
     fontSize:20,
     //fontFamily:'Ruda',
