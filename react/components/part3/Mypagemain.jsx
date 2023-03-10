@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {StyleSheet,Button,View,TouchableOpacity, Text,Alert, Image } from "react-native";
 import Constants from 'expo-constants';
 import axios from 'axios';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function Mypagemain({navigation, route}){//모달창 만들기, 기능 구현
   const loginID = route.params.loginID;
