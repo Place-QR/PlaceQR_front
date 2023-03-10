@@ -1,8 +1,25 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import {StyleSheet,View,Text,Image,TouchableOpacity} from 'react-native';
 import { ScrollView } from 'react-native';
+import axios from 'axios';
+//myplace에서 데이터 받아와서 comment list, comment 정보 불러오기, list와 comment 내용 동시에 화면에 불러오기, get, map 하기
+export default function readgb({navigation, route}){
+   const [commentlist,getCommentlist,touchcomment,setTouchcomment] = useState();
 
-export default function readgb({navigation}){
+  const getId = async () => {
+        try {
+          const response = await axios.get(`${data}`);
+          getOwnerid(response);
+        }
+        catch(error) {
+          console.log(error);
+        }
+      };
+  // 첫 렌더링 때 getData() 한 번 실행    
+  useEffect(() => { 
+    getId();
+  },[]);
+
   return(
     <View style ={styles.container}>
       <Image
@@ -16,9 +33,10 @@ export default function readgb({navigation}){
             source={require("../../assets/PQRbackIMG4.png")}
             resizeMode="center"
             />
+      {/*특정 장소의 클릭한 방명록의 내용을 보여준다*/}
       <View style={{width:344,height:326,borderBottomColor:"#000000",alignItems:"center",justifyContent:"center"}}>
         <View style={[styles.place,{zIndex:1}]}>
-          <Text style={styles.placename}>희영이집</Text>
+          <Text key={user.pk} style={styles.placename}>{placeData.name}</Text>
         </View>
         <View style={[styles.gbback1,{marginTop:-20}]}>
           <View style={[styles.gbback2]}>
@@ -35,6 +53,8 @@ export default function readgb({navigation}){
       </View>
       <View style={{width:344,height:359}}>
         <ScrollView>
+          {/* map 함수를 이용하여 방명록 데이터 나열 - 특정 장소의 방명록만 나열 */}
+          {news.filter(user => user.category == 'politic').map(user => (
           <View style={styles.guestlist}>
             <View style={{width:116,height:47,marginLeft:30,display:"flex",flexDirection:'row'}}>
               <View style={{width:58,height:47,paddingTop:11}}>
@@ -48,58 +68,7 @@ export default function readgb({navigation}){
               <Text style={styles.writetime}>글을 쓴 시각</Text>
             </View>           
           </View>
-          <View style={styles.guestlist}>
-            <View style={{width:116,height:47,marginLeft:30,display:"flex",flexDirection:'row'}}>
-              <View style={{width:58,height:47,paddingTop:11}}>
-                <Text style={styles.name}>이름</Text>
-              </View>
-              <View style={{width:58,height:47,paddingTop:19,paddingLeft:10,alignItems:'left'}}>
-                <Text style={styles.relation}>관계</Text>
-              </View>
-            </View>
-            <View style={{width:116,height:36,marginLeft:30,paddingTop:5}}>
-              <Text style={styles.writetime}>글을 쓴 시각</Text>
-            </View>           
-          </View>
-          <View style={styles.guestlist}>
-            <View style={{width:116,height:47,marginLeft:30,display:"flex",flexDirection:'row'}}>
-              <View style={{width:58,height:47,paddingTop:11}}>
-                <Text style={styles.name}>이름</Text>
-              </View>
-              <View style={{width:58,height:47,paddingTop:19,paddingLeft:10,alignItems:'left'}}>
-                <Text style={styles.relation}>관계</Text>
-              </View>
-            </View>
-            <View style={{width:116,height:36,marginLeft:30,paddingTop:5}}>
-              <Text style={styles.writetime}>글을 쓴 시각</Text>
-            </View>           
-          </View>
-          <View style={styles.guestlist}>
-            <View style={{width:116,height:47,marginLeft:30,display:"flex",flexDirection:'row'}}>
-              <View style={{width:58,height:47,paddingTop:11}}>
-                <Text style={styles.name}>이름</Text>
-              </View>
-              <View style={{width:58,height:47,paddingTop:19,paddingLeft:10,alignItems:'left'}}>
-                <Text style={styles.relation}>관계</Text>
-              </View>
-            </View>
-            <View style={{width:116,height:36,marginLeft:30,paddingTop:5}}>
-              <Text style={styles.writetime}>글을 쓴 시각</Text>
-            </View>           
-          </View>
-          <View style={styles.guestlist}>
-            <View style={{width:116,height:47,marginLeft:30,display:"flex",flexDirection:'row'}}>
-              <View style={{width:58,height:47,paddingTop:11}}>
-                <Text style={styles.name}>이름</Text>
-              </View>
-              <View style={{width:58,height:47,paddingTop:19,paddingLeft:10,alignItems:'left'}}>
-                <Text style={styles.relation}>관계</Text>
-              </View>
-            </View>
-            <View style={{width:116,height:36,marginLeft:30,paddingTop:5}}>
-              <Text style={styles.writetime}>글을 쓴 시각</Text>
-            </View>           
-          </View>
+          ))}
         </ScrollView>
       </View>
     </View>
@@ -112,22 +81,14 @@ const styles=StyleSheet.create({
   container:{
     flex:1,
     alignItems:'center',
-    // marginTop:Constants.statusBarHeight,
-    // marginHorizontal:16,
   },
   gbback1:{
     alignItems:"center",
     justifyContent:"center",    
     backgroundColor:"#2C2F40",
-    //marginBottom:20,
-    //padding:19,
-    //paddingLeft:17,
-    //marginBottom:35,
     borderRadius:10,
     width: 344,
     height: 264,
-    // left: 34,
-    // top: 129,
     ...Platform.select({
       ios: {
         shadowColor: "#000000",
@@ -147,40 +108,25 @@ const styles=StyleSheet.create({
     alignItems:"center",
     justifyContent:"center", 
     backgroundColor:"#FFF",
-    //padding:19,
-    //paddingLeft:17,
-    //marginBottom:35,
     borderRadius:10,
     width: 298,
     height: 206,
-    // left: 34,
-    // top: 129,
   },
   place:{
     alignItems:"center",
     justifyContent:"center", 
     backgroundColor:"#4D5A73",
-    //padding:19,
-    //paddingLeft:17,
-    //marginBottom:35,
     borderRadius:10,
     width: 115,
     height: 35,
-    // left: 34,
-    // top: 129,
   },
   guestlist:{
     alignItems:"left",
-    //justifyContent:"center", 
     backgroundColor:"#2C2F40",
-    //padding:19,
-    //paddingLeft:17,
     marginTop:17,
     borderRadius:15,
     width: 337,
     height: 83,
-    // left: 34,
-    // top: 129,
     ...Platform.select({
       ios: {
         shadowColor: "#000000",
@@ -198,49 +144,36 @@ const styles=StyleSheet.create({
   },
   gbtext1:{
     textAlign:'center',
-    // paddingVertical:30,
     fontSize:16,
-    //fontFamily:'Ruda',
     fontWeight:'bold',
   },
   gbtext2:{
     textAlign:'center',
-    // paddingVertical:30,
     fontSize:20,
-    //fontFamily:'Ruda',
     fontWeight:'bold',
   },
   placename:{
     textAlign:'center',
     color:"#fff",
-    // paddingVertical:30,
     fontSize:24,
-    //fontFamily:'Ruda',
     fontWeight:'bold',
   },
   name:{
     textAlign:'center',
     color:"#fff",
-    // paddingVertical:30,
     fontSize:24,
-    //fontFamily:'Ruda',
     fontWeight:'bold',
   },
   relation:{
     textAlign:'center',
     color:"#fff",
-    // paddingVertical:30,
     fontSize:16,
-    //fontFamily:'Ruda',
     fontWeight:'Bold',
   },
   writetime:{
     textAlign:'center',
     color:"#fff",
-    // paddingVertical:30,
     fontSize:16,
     fontWeight:'normal',
-    //fontFamily:'Ruda',
-    //fontWeight:'bold',
   },
 });

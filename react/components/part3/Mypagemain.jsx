@@ -1,15 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {StyleSheet,Button,View,TouchableOpacity, Text,Alert, Image } from "react-native";
 import Constants from 'expo-constants';
-import { AsyncStorage } from "react-native"
-import { MaterialIcons } from '@expo/vector-icons';
+import axios from 'axios';
 
-export default function Mypagemain({navigation}){
-  
-  const logout = () => {
-    AsyncStorage.removeItem('user_id');
-  };
-
+export default function Mypagemain({navigation}){//모달창 만들기, 기능 구현
   return(
     <View style ={styles.container}>
       <Image
@@ -37,8 +31,15 @@ export default function Mypagemain({navigation}){
           <View style={{width:34,height:54,justifyContent:"center"}}>
           </View>
           <View style={{width:34,height:37,justifyContent:"center",padding:2}}>
-            <TouchableOpacity activeOpacity={0.8} onPress={() => {navigation.navigate('Home'); logout();}}>
-            <MaterialIcons name="close" size={24} color="red" />
+            <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('test')}>
+              <Image
+                  style={{
+                      width:'85%', 
+                      height:'85%', 
+                      resizeMode:"contain",
+                  }}
+                  source={require("../../assets/icon_setting.png")}
+                  />
             </TouchableOpacity>
           </View>
         </View>
