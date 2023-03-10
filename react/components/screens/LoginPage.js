@@ -33,21 +33,21 @@ const {Id, password} = inputs;
 
     const onSubmitFormHandler = async () => {
   
-      navigation.navigate('Mypagemain');
+      navigation.navigate('Mypagemain', {loginID:`${Id}`});
       try {
-        const response = await axios.post("https://www.placeqr.store/user/dj-rest-auth/login", {
+        const response = await axios.post("https://www.placeqr.store/users/dj-rest-auth/login/", {
         username:"heaon",
-        email:"j3heawon@naver.com",
-        password:"1234",
+        // email:"j3heawon@naver.com",
+        password:"1234"
         // Id:`${input.Id}`, password:`${input.password}, passwordcheck:`${input.passwordcheck}`, name: `${input.name}`,M_number:`${input.M_number}`
         
       
       })
       await As
-      
-      
       AyncStorage.setItem('user_id', JSON.stringify(Id));
       navigation.navigate('Mypagemain');
+      
+      
     } catch (error) {
         console.log(error);
       }

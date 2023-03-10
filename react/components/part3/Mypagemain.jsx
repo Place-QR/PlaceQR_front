@@ -3,9 +3,12 @@ import {StyleSheet,Button,View,TouchableOpacity, Text,Alert, Image } from "react
 import Constants from 'expo-constants';
 import axios from 'axios';
 
-export default function Mypagemain({navigation}){//모달창 만들기, 기능 구현
+export default function Mypagemain({navigation, route}){//모달창 만들기, 기능 구현
+  const loginID = route.params.loginID;
+
   return(
     <View style ={styles.container}>
+      {console.log(loginID)}
       <Image
             style={{
                 width:'100%', 
