@@ -3,7 +3,7 @@ import { TouchableOpacity, View,Text } from "react-native";
 
 const MyButtton = () => {
     return(
-        <TouchableOpacity onPress={() => alert('MyButton')}
+        <TouchableOpacity onPress={onSubmitFormHandler()}
         //hitSlop={{ bottom:100, top:100, left:100, right:100}}
         pressRetentionOffset={{ bottom:10, top:10, left:10, right:10}}
         >

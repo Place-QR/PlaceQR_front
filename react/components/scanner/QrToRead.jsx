@@ -3,12 +3,35 @@ import React, { Component, useEffect, useState } from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native";
 
+<<<<<<< HEAD
 export default function QrToRead({ navigation, route }) {
   const scanData = route.params.scanData;
 
   const [placeData, setPlaceData] = useState();
   const [commentsData, setCommentsData] = useState();
   const [comment, setComment] = useState({});
+=======
+import CommentView from './CommentView';
+
+export default function QrToRead({navigation, route}){
+    const scanData = route.params.scanData;
+  
+    const [placeData, setPlaceData] = useState();
+    const [commentsData, setCommentsData] = useState();
+
+    const [comment, setComment] = useState({});
+    const getComment = (e) => {
+      // console.log("e is: ", e);
+      setComment(e);
+      // console.log(comment);
+    }
+
+    useEffect(() => {
+        const getData = async () => {
+          try {
+            const response = await axios.get(`${scanData}`);
+            setPlaceData(response.data);
+>>>>>>> origin/master
 
   useEffect(() => {
     const getData = async () => {
@@ -35,15 +58,24 @@ export default function QrToRead({ navigation, route }) {
     <View style={styles.container}>
       <Image
         style={{
+<<<<<<< HEAD
           width: "100%",
           height: "40%",
           position: "absolute",
           zIndex: 0,
           bottom: -55,
+=======
+            width:'100%', 
+            height:'40%', 
+            position:'absolute', 
+            zIndex:0,
+            bottom:-55,
+>>>>>>> origin/master
         }}
         source={require("../../assets/PQRbackIMG4.png")}
         resizeMode="center"
       />
+<<<<<<< HEAD
       <View
         style={{
           width: 344,
@@ -74,12 +106,33 @@ export default function QrToRead({ navigation, route }) {
               <View style={{ width: 284, height: 156, alignItems: "left" }}>
                 <Text style={[styles.gbtext2, { color: "#626262" }]}>
                   {comment.description}
+=======
+      <View style={{width:344,height:326,borderBottomColor:"#000000",alignItems:"center",justifyContent:"center"}}>
+        <View style={[styles.place,{zIndex:1}]}>
+            { placeData && 
+                <Text style={styles.placename}>{placeData.name}</Text>
+            }
+        </View>
+        
+        <View style={[styles.gbback1,{marginTop:-20}]}>
+          <View style={[styles.gbback2]}>
+            <View style={{width:284,height:35,alignItems:'left',marginTop:10,}}> 
+              <Text style={[styles.gbtext1,{color:'#626262'}]}>
+                {comment.name == null ? ("글쓴이"):(comment.name)} , {comment.created_at==null ? ("작성시간"):(comment.created_at.substring(0,10))}
+              </Text>
+            </View>
+            <ScrollView>
+              <View style={{width:284, alignItems:'left'}}>
+                <Text style={[styles.gbtext2,{color:'#626262'}]}>
+                  {comment.description == null ? ("방명록이 표시됩니다."):(comment.description)}
+>>>>>>> origin/master
                 </Text>
               </View>
             </ScrollView>
           </View>
         </View>
       </View>
+<<<<<<< HEAD
 
       <View style={{ width: 344, height: 359 }}>
         <ScrollView>
@@ -124,6 +177,30 @@ export default function QrToRead({ navigation, route }) {
                 </View>
               </TouchableOpacity>
             ))}
+=======
+      
+      <View style={{width:344,height:359}}>
+        <ScrollView>
+        {commentsData && commentsData.map((e) => (
+          <TouchableOpacity onPress={() => getComment(e)}>
+            <View key={e} style={styles.guestlist}>
+                <View  style={{width:116,height:47,marginLeft:30,display:"flex",flexDirection:'row'}}>
+                    <View style={{width:70,height:47,paddingTop:11}}>
+                        <Text style={styles.name}>{e.name}</Text>
+                    </View>
+                    <View style={{width:58,height:47,paddingTop:19,paddingLeft:10,alignItems:'left'}}>
+                        <Text style={styles.relation}>{e.relation}</Text>
+                    </View>
+                </View>
+                <View style={{width:110,height:36,marginLeft:30,paddingTop:5}}>
+                    <Text style={styles.writetime}>{e.created_at.substring(0,10)}</Text>
+                </View>           
+            </View>
+          </TouchableOpacity>
+            )
+          )
+        }
+>>>>>>> origin/master
         </ScrollView>
       </View>
     </View>
@@ -225,8 +302,13 @@ const styles = StyleSheet.create({
     //fontFamily:'Ruda',
     fontWeight: "bold",
   },
+<<<<<<< HEAD
   gbtext2: {
     textAlign: "center",
+=======
+  gbtext2:{
+    textAlign:'left',
+>>>>>>> origin/master
     // paddingVertical:30,
     fontSize: 20,
     //fontFamily:'Ruda',

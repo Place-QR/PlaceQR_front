@@ -1,19 +1,55 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View ,TextInput,TouchableWithoutFeedback, Keyboard,Button, Platform} from 'react-native';
-import R_Regi from '../buttons/R_Regi';
+import React, {useEffect,useState} from 'react';
+import { StyleSheet, Text, View ,TextInput,TouchableWithoutFeedback, Keyboard,Button, Platform,TouchableOpacity,BackHandler} from 'react-native';
+import axios from 'axios';
+import {AsyncStorage}from 'react-native';
 
-const LoginPage = () => {
+const LoginPage = ({navigation}) => {
+
+  const handlePressBack = () => {
+    if(navigation?.canGoBack()) {
+        navigation.goBack()
+        return true
+    }
+    return false
+};
+useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', handlePressBack)
+    return () => {
+        BackHandler.removeEventListener('hardwareBackPress', handlePressBack)
+    }
+},[handlePressBack]);
 
   const [inputs, setInputs] = React.useState({
-    Id: '',
-    password: '',
-    passwordcheck:'',
-    name:'',
-    M_number:'',
+    username:"",
+    email:"",
+    password1:"",
+    password2:"",
+
+    //Id:"", password:"", passwordcheck:"" ,name:"", eMail:"",
 });
 
-const {Id, password,passwordcheck,name,M_number} = inputs;
+const onSubmitFormHandler = async () => {
+  
+  try {
+   await axios.post("https://www.placeqr.store/users/dj-rest-auth/registration/", {
+    username:"jjasjuaas",
+    email:"sjqwass@naver.com",
+    password1:"1q2w3as4ra!!!",
+    password2:"1q2w3as4ra!!!"
+
+    // Id:`${input.Id}`, password:`${input.password}, passwordcheck:`${input.passwordcheck}`, name: `${input.name}`,eMail:`${input.eMail}`
+    }
+   
+    
+    );
+   
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const {Id, password,passwordcheck,name,eMail} = inputs;
 
     const onChange = (keyvalue, e) => {
         setInputs({
@@ -76,16 +112,24 @@ const {Id, password,passwordcheck,name,M_number} = inputs;
       value={name}
       />
 
-<Text style={{color: 'white',fontSize:15,marginBottom:2}}>전화번호</Text>  
+<Text style={{color: 'white',fontSize:15,marginBottom:2}}>이메일</Text>  
        <TextInput 
       style={styles.inputPassword3}
       placeholderTextColor={"#ffffff"}
-      onChangeText={(e)=> onChange("M_number",e)}
-      value={M_number}
+      onChangeText={(e)=> onChange("eMail",e)}
+      value={eMail}
       />
       </View>
       <View style={styles.fixToText}>
-        <R_Regi />
+      <TouchableOpacity onPress={()=>{onSubmitFormHandler(); handlePressBack();}}
+        //hitSlop={{ bottom:100, top:100, left:100, right:100}}
+        pressRetentionOffset={{ bottom:10, top:10, left:10, right:10}}
+        >
+            <View style={{borderWidth:1 ,borderColor:'white',backgroundColor: '#2C2F40',padding:10, borderRadius:15,width:100, alignItems:"center",
+    justifyContent: 'center' , marginBottom:1, marginTop:30}}>
+                <Text style={{fontSize:20, color:'white'}}>가입하기</Text>
+            </View>
+        </TouchableOpacity>
       </View>
     </View>
     </TouchableWithoutFeedback>

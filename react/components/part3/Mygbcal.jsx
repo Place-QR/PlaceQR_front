@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import {StyleSheet,View,Text,Image} from 'react-native';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {LocaleConfig} from 'react-native-calendars';
@@ -7,6 +7,7 @@ import RNCalendarEvents from "react-native-calendar-events";
 import Icon from 'react-native-vector-icons/AntDesign';
 //import EventCalendar from 'react-native-events-calendar';
 import moment from 'moment';
+import axios from 'axios';
 
 LocaleConfig.locales['fr'] = {
   monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
@@ -22,7 +23,36 @@ class Mygbcal extends Component {
   state={
     selectedDate: '',
   }
-  render() {
+
+  render() {// id 받아오기, useeffect
+    const [ownerid,getOwnerid,mycomment,getMycomment] = useState();
+    const getData = async () => {
+      try {
+        const response = await axios.get(`https://www.placeqr.store/places/`);
+        getMycomment(response);
+      }
+      catch(error) {
+        console.log(error);
+      }
+    };
+    const getId = async () => {
+        try {
+          const response = await axios.get(`https://www.placeqr.store/`);
+          getOwnerid(response);
+        }
+        catch(error) {
+          console.log(error);
+        }
+      };
+  // 첫 렌더링 때 getData() 한 번 실행    
+  useEffect(() => { 
+    getId();
+  },[]);
+    // 첫 렌더링 때 getData() 한 번 실행    
+    useEffect(() => { 
+      getData();
+      getId();
+    },[]);
     getSelectedDayEvents = date => {
       let markedDates = {};
       markedDates[date] = { selected: true, color: '#FFBA93', borderRadius:10,width:41,height:36,justifyContent:'center',margin:3 };
@@ -154,28 +184,6 @@ class Mygbcal extends Component {
                 {/* </View> */}
               </View>
             </View>
-            {/* <Agenda
-            items={agenda.items}
-            // Initially selected day
-            selected={date}
-            // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-            minDate={today}
-            // Specify how each item should be rendered in agenda
-            renderItem={(item, firstItemInDay) => {
-                return <View>
-                  <View style={{width:355,height:33,alignItems:'center',justifyContent:'center', display:"flex",flexDirection:'row'}}>
-                    <PlanningCard style={styles.appointmentCard}
-                    hour={String(moment.unix(item.date).format("H[h]mm"))}
-                    ></PlanningCard>
-
-                      <View style={styles.line}></View>
-                      <Text style={[styles.infotext,{color:'#2C2F40'}]}>\(item.date)</Text>
-                      <View style={styles.line}></View>
-                    
-                  </View>
-                </View>;
-            }}
-            /> */}
             
             <View style={{width:355,height:218,alignItems:'center',paddingTop:10}}>
               <ScrollView>

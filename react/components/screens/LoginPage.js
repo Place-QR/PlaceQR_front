@@ -1,18 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View ,TextInput,TouchableWithoutFeedback, Keyboard,Image} from 'react-native';
+import React, {useEffect,useState} from 'react';
+import { StyleSheet, Text, View ,TextInput,TouchableWithoutFeedback, Keyboard,Image,TouchableOpacity,BackHandler} from 'react-native';
 import Login from '../buttons/Login.js';
 import Reig from '../buttons/Reig';
 import Find from '../buttons/Find.js';
 import Kakao from '../buttons/Kakao.js';
 import Google from '../buttons/Google.js';
+import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
+import { AsyncStorage } from "react-native"
+
+
 
 
 const LoginPage = () => {
+  
+  const navigation = useNavigation();
 
   const [inputs, setInputs] = React.useState({
-    Id: '',
-    password: '',
+    Id: "",
+    password: "",
 });
 
 const {Id, password} = inputs;
@@ -22,6 +29,28 @@ const {Id, password} = inputs;
             ...inputs,
             [keyvalue]: e
         });
+    };
+
+    const onSubmitFormHandler = async () => {
+  
+      navigation.navigate('Mypagemain');
+      try {
+        const response = await axios.post("https://www.placeqr.store/user/dj-rest-auth/login", {
+        username:"heaon",
+        email:"j3heawon@naver.com",
+        password:"1234",
+        // Id:`${input.Id}`, password:`${input.password}, passwordcheck:`${input.passwordcheck}`, name: `${input.name}`,M_number:`${input.M_number}`
+        
+      
+      })
+      await As
+      
+      
+      AyncStorage.setItem('user_id', JSON.stringify(Id));
+      navigation.navigate('Mypagemain');
+    } catch (error) {
+        console.log(error);
+      }
     };
 
   return (
@@ -67,10 +96,20 @@ const {Id, password} = inputs;
       value={password}
       secureTextEntry={true}
       /> 
+      
      </View>
-      <Login/>
+    <View>
+    <TouchableOpacity onPress={()=>{onSubmitFormHandler();}}
+        pressRetentionOffset={{ bottom:10, top:10, left:10, right:10}}>
+        <View style={{borderWidth:1 ,borderColor:'white',backgroundColor: '#2C2F40',height:50,width:250, borderRadius:15, alignItems:"center",
+    justifyContent: 'center' , marginBottom:1, }}>
+                <Text style={{fontSize:20, color:'white'}}>log in</Text>
+            </View>
+        </TouchableOpacity>
+    </View>
       
       <View style={styles.fixToText}>
+       
         <Reig/>
         <Find/>
       </View>

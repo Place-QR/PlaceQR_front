@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {StyleSheet,Button,View,TouchableOpacity, Text,Alert, Image } from "react-native";
 import Constants from 'expo-constants';
+import axios from 'axios';
 
-export default function Mypagemain({navigation}){
+export default function Mypagemain({navigation}){//모달창 만들기, 기능 구현
   return(
     <View style ={styles.container}>
       <Image

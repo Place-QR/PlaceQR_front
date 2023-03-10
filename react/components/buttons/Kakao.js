@@ -9,14 +9,7 @@ const MyButtton = () => {
         >
             <View style={{borderWidth:1 ,borderColor:'white',height:50,width:280,backgroundColor: '#2C2F40', borderRadius:15,width:250, 
     display:'flex',alignItems:'center',flexDirection: 'row' , marginBottom:10, marginTop:30,display:'flex',  flexDirection: 'row', }}>
-
-<Image
-            style={{width:30,height:30,marginRight:15,marginLeft:10}}
-            source={require("../../assets/카카오톡 로고 Yellow.png")}
-           
-            />
-
-                <Text style={{fontSize:20, color:'white'}}>카카오로 시작하기</Text>
+                <Text style={{fontSize:20, color:'white',marginLeft:63}}>카카오로 시작하기</Text>
             </View>
         </TouchableOpacity>
     );
