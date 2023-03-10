@@ -20,7 +20,7 @@ function Scan({navigation}) {
     // Linking.openURL(`${data}`);
     // navigation.navigate('Scanned');
     // const scanData = `${data}`
-    const check = data.substring(8,15);
+    const check = data.substring(12,19);
     
     //place qr의 qr코드만 인식
     if(check == 'placeqr') {

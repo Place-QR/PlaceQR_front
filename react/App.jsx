@@ -16,6 +16,7 @@ import Mygbcal from "./components/part3/Mygbcal";
 import myplace from "./components/part3/myplace";
 import readgb from "./components/part3/readgb";
 import test from "./components/part3/test";
+import QrToRead from './components/scanner/QrToRead';
 
 
 const Stack = createStackNavigator();
@@ -44,6 +45,7 @@ export default function App() {
           <Stack.Screen name="Mygbcal" component={Mygbcal} options={{title: '장소이름'}}/>
           <Stack.Screen name="myplace" component={myplace} options={{title: '내 장소들'}}/>
           <Stack.Screen name="readgb" component={readgb} options={{title: '방명록 읽기'}}/>
+          <Stack.Screen name="QrToRead" component={QrToRead} options={{title: '방명록 읽기'}}/>
           <Stack.Screen name="test" component={test} options={{title: '테스트'}}/>
         </Stack.Navigator>
       </NavigationContainer>

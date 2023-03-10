@@ -6,6 +6,7 @@ import axios from "axios";
 function Write({navigation, route}) {
     // const [text, onChangeText] = React.useState("");
     const scanData = route.params.scanData;
+    const placeID = route.params.placeID;
 
     const [inputs, setInputs] = React.useState({
         name: '',
@@ -68,42 +69,35 @@ function Write({navigation, route}) {
 
     };
 
-    // const uploadForm = async () => {
-    //     // const {name, relation, phone, talk} = values;
-
-    //     // 서버에 요청 보내기
-    //     const localUri = result.assets[0].uri;
-    //     const filename = localUri.split('/').pop();
-    //     const match = /\.(\w+)$/.exec(filename ?? '');
-    //     const type = match ? `image/${match[1]}` : `image`;
-    //     const formData = new formData();
-    //     let dataset = {
-    //         // name: inputs.name,
-    //         // relation:inputs.relation,
-    //         // phone: inputs.phone,
-    //         description: "ㄴㄴㅇㅇ",
-    //         user:1,
-    //         place: 1,
-    //     }
-    //     formData.append("data", JSON.stringify(dataset)); // JSON 형식으로 파싱 후 추가
-    //     // formData.append('photo', {uri: localUri, name: filename, type});
-    
-    //     await axios({
-    //         method: 'post',
-    //         url:'https://placeqr.loca.lt/api/v1/comments',
-    //         headers: {
-    //             'content-type': 'multipart/form-data',
-    //         },
-    //         data: formData
-    //     })
-    // };
-
     const postTest = async() => {
         try{
-            await axios.post("https://placeqr.loca.li/api/vi/comments", {
-                "description": "sdfsdfsd",
-                "user": 1,
-                "place": 1
+            // 서버에 요청 보내기
+            // const localUri = result.assets[0].uri;
+            // const filename = localUri.split('/').pop();
+            // const match = /\.(\w+)$/.exec(filename ?? '');
+            // const type = match ? `image/${match[1]}` : `image`;
+            // const formData = new formData();
+
+            // let dataset = {
+            //     description: `${inputs.talk}`,
+            //     name:`${inputs.name}`,
+            //     relation:`${inputs.relation}`,
+            //     contact:`${inputs.phone}`,
+            //     user: null,
+            //     place: `${placeID}`
+
+            // }
+
+            // formData.append("data", JSON.stringify(dataset)); // JSON 형식으로 파싱 후 추가
+            // formData.append('photo', {uri: localUri, name: filename, type});
+
+            await axios.post("https://www.placeqr.store/comments/", {
+                description: `${inputs.talk}`,
+                name:`${inputs.name}`,
+                relation:`${inputs.relation}`,
+                contact:`${inputs.phone}`,
+                user: null,
+                place: `${placeID}`
             })
         }
         catch(e){
@@ -128,7 +122,8 @@ function Write({navigation, route}) {
 
   return (
       <View style={styles.container}>
-        {console.log('write '+ scanData)}
+        {/* {console.log('write '+ scanData)} */}
+        {console.log(placeID)}
         <Image
             style={{
                 width:'100%', 
@@ -145,9 +140,9 @@ function Write({navigation, route}) {
                 {placeData && 
                     <Text style={styles.placeTitle}>{placeData.name}</Text>
                 }
-                {placeData && 
+                {/* {placeData && 
                     <Text style={styles.placeTitle}>{placeData.pk}</Text>
-                }
+                } */}
                 
                 <TextInput 
                     style={styles.input}
@@ -186,25 +181,25 @@ function Write({navigation, route}) {
                     textAlign="left"
                     multiline={true}
                 >
-                    {/* {imageUrl && <Image source={{uri: imageUrl}} style={{width:200, height:200}}/>} */}
                 </TextInput>
-                <View style={{width:'100%', height:'10%',position:'relative',}}>
+                {/* <View style={{width:'100%', height:'10%',position:'relative',}}>
                     <Pressable 
                         style={{width:'10%', height:'80%',position:'absolute',
                         left: '8%',}}
                         onPress={uploadImage}
-                    >
+                        >
                         <Image 
                             style={{
                                 width:'100%',
                                 height:'90%',
                             }}
                             source={require("../../assets/image.png")}
-                        />
+                            />
                         
                     </Pressable>
 
                 </View>
+                {imageUrl && <Image source={{uri: imageUrl}} style={{width:100, height:100}}/>} */}
 
             </View>
         </TouchableWithoutFeedback>
