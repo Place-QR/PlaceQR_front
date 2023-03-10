@@ -25,12 +25,8 @@ export default function QrToRead({ navigation, route }) {
     getData();
   }, []);
 
-  // useEffect(() => {
-  //   console.log("it's me", commentsData[1].name);
-  // }, []);
-
   const getComment = (e) => {
-    console.log("e is: ", e);
+    // console.log("e is: ", e);
     setComment(e);
     console.log(comment);
   }
