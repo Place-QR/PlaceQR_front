@@ -1,29 +1,9 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect, useCallback} from "react";
 import {StyleSheet,Button,View,TouchableOpacity, Text,Alert, Image} from "react-native";
 import Constants from 'expo-constants';
 import { ScrollView } from 'react-native';
 import axios from 'axios';
 
-
-// const myplace = axios.get({
-//   URL: 'https://www.placeqr.store/',//url 추가
-//   params: {
-//     user_id: `/user?ID=${userId}`,//변수 추가 
-//   },
-// });
-// async function getUser() { // async, await을 사용하는 경우
-//   try {
-//     // 응답 결과(response)를 변수에 저장하거나.. 등 필요한 처리를 해 주면 된다.
-
-//     var userId = 12345;
-//     await axios.get(`/user?ID=${userId}`); // Backtick(`)을 이용해 이렇게 요청할 수도 있다.
-    
-//     console.log(response);
-//   } catch (e) {
-//     // 실패 시 처리
-//     console.error(e);
-//   }
-// }
 // const [placedata, setPlacedata] = useState([]);
 // function getData() {
 //   axios.get("https://www.placeqr.store/")
@@ -39,7 +19,8 @@ import axios from 'axios';
 export default function myplace({navigation}){
   
   const [placeData,setPlaceData] = useState();
-  const [ setRefresh] = useState(false);
+  const [ ,updateState] = useState();
+
   //const [ownerid,getOwnerid,placeData,setPlaceData] = useState(); id 받아오기, useeffect, 방명록 개수, place id 넘겨주기,데이터 삭제 지정된 장소 삭제, 화면에서도 장소 데이터 삭제, qr 누르면 qr 이미지 창으로 넘어가기, qr 데이터 넘겨주기
 //사용자 지정 안하고 전체 list 불러오는 것까지만 구현함, merge해야 확인 가능
   // const getId = async () => {
@@ -64,18 +45,12 @@ export default function myplace({navigation}){
       console.log(error);
     }
   };
-  const refresh=() => {
-  // ................. //delete logic
-      reload ? setRefresh(false) : setRefresh(true) //toggle just to change state
-  }
+  const forceUpdate = useCallback(() => updateState({}), []);
   // 첫 렌더링 때 getData() 한 번 실행    
   useEffect(() => { 
     getData();
     //getId();
-  }, [reload]);
-
-
-  
+  });
  
   //navigation.navigate('readgb',{placeData:`${data}`});//place id 넘겨주기
   // //place qr의 qr코드만 인식
@@ -147,8 +122,12 @@ export default function myplace({navigation}){
                     <View style={{width:40,height:25}}></View>
                     <View style={{width:40,height:31,justifyContent:"center"}}>
                       <TouchableOpacity activeOpacity={0.8} onPress={() => Alert.alert("장소 삭제", "해당 장소를 삭제하시겠습니까?", [
-                        {text:"Yes", onPress:()=>axios.delete(`https://www.placeqr.store/places/`+`${e.id}`,refresh())},{text:"No", onPress:()=>console.log('No')},refresh()])
-                        }>
+                        {text:"Yes", onPress:()=>{
+                          forceUpdate,
+                          axios.delete(`https://www.placeqr.store/places/`+`${e.id}`)
+                        }},
+                        {text:"No", onPress:()=>console.log('No')
+                        }])}>
                             <Image
                               source={require("../../assets/icon_trash2.png")}
                               style={{
@@ -170,54 +149,37 @@ const styles=StyleSheet.create({
   container:{
     flex:1,
     alignItems:'center',
-    // marginTop:Constants.statusBarHeight,
-    // marginHorizontal:16,
   },
   placename:{
     textAlign:'left',
-    // paddingVertical:30,
     fontSize:23,
-    // fontFamily:'Ruda',
     fontWeight:'bold',
     color:'white',
   },
   placeinfo1:{
     textAlign:'left',
-    // paddingVertical:30,
     fontSize:15,
-    // fontFamily:'Ruda',
     fontWeight:'bold',
     color:'white',
   },
   placeinfo2:{
     textAlign:'left',
-    // paddingVertical:30,
     fontSize:13,
-    // fontFamily:'Ruda',
     color:'white',
   },
   title:{
     textAlign:'center',
-    //fontFamily:'Ruda',
     paddingVertical:30,
     fontSize:20,
     fontWeight:'bold',
     color:'white',
   },
-  buttonSize:{
-    // margin:10
-  },
   placebuttonfront:{
     alignItems:"left",
     backgroundColor:"#4D5A73",
     justifyContent:"center",
-    //paddingLeft:13,
-    //padding:11,
-    //marginBottom:30,
     width: 310,
     height: 110,
-    // left: 37,
-    // top: 287
     borderRadius:10,
     display:"flex",
     flexDirection:'row',
@@ -226,13 +188,9 @@ const styles=StyleSheet.create({
     alignItems:"center",
     backgroundColor:"#2C2F40",
     justifyContent:"center",
-    //paddingLeft:13,
-    //padding:11,
     marginBottom:30,
     width: 355,
     height: 130,
-    // left: 37,
-    // top: 287
     borderRadius:20,  
     ...Platform.select({
       ios: {

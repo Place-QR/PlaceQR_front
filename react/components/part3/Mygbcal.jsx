@@ -184,28 +184,6 @@ class Mygbcal extends Component {
                 {/* </View> */}
               </View>
             </View>
-            {/* <Agenda
-            items={agenda.items}
-            // Initially selected day
-            selected={date}
-            // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-            minDate={today}
-            // Specify how each item should be rendered in agenda
-            renderItem={(item, firstItemInDay) => {
-                return <View>
-                  <View style={{width:355,height:33,alignItems:'center',justifyContent:'center', display:"flex",flexDirection:'row'}}>
-                    <PlanningCard style={styles.appointmentCard}
-                    hour={String(moment.unix(item.date).format("H[h]mm"))}
-                    ></PlanningCard>
-
-                      <View style={styles.line}></View>
-                      <Text style={[styles.infotext,{color:'#2C2F40'}]}>\(item.date)</Text>
-                      <View style={styles.line}></View>
-                    
-                  </View>
-                </View>;
-            }}
-            /> */}
             
             <View style={{width:355,height:218,alignItems:'center',paddingTop:10}}>
               <ScrollView>
