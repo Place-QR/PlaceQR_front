@@ -1,10 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect,useState} from 'react';
-import {StyleSheet, Text, View, Image,TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import axios from "axios";
 
 
-const Home = ({route, navigation}) => {
+const Home = ({route}) => {
 
 
   //const makeData = route.params.scanData?;
@@ -40,20 +40,19 @@ const Home = ({route, navigation}) => {
             />
      <StatusBar style="auto" />
      
-    <View style={styles.container2}>
+    //<View style={styles.container2}>
      
-    
-        <Text style={styles.placeTitle}> 생성이 완료 되었습니다.</Text> 
-        <Text style={styles.placeTitle}> 나의 장소들에서 확인하세요.</Text> 
+     {placeData && 
+        <Text style={styles.placeTitle}>{"\n"}{placeData.name}</Text> 
+      }
+      {placeData &&
+      <View>
+        <Image source={{uri: placeData.qr_img}}
+        style={{width:230, height:230}}></Image>
+      </View>
+      }
+ 
 
-        <TouchableOpacity onPress={() => {navigation.navigate('myplace');}}
-        pressRetentionOffset={{ bottom:10, top:10, left:10, right:10}}
-        >
-            <View style={{width:200, alignItems:"center",
-    justifyContent: 'center',height:60, marginTop:10}}>
-                <Text style={{fontSize:30, color:'black',fontWeight:'bold'}}>확인하기</Text>
-            </View>
-        </TouchableOpacity>
      </View>
     </View>
   );
@@ -67,7 +66,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
       }, 
     container2: {
-  
+   borderWidth: 1,
+   borderColor: '#2C2F40',
+   backgroundColor: '#2C2F40',
+   borderRadius:10,
     width:280,
    
     height:280,
@@ -76,9 +78,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   placeTitle:{
-    color: "black",
+    color: "white",
+    marginTop: -30,
     marginBottom:5,
-    fontSize:20,
   }
   
    
