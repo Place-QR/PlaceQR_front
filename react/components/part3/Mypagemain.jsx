@@ -34,15 +34,8 @@ export default function Mypagemain({navigation, route}){//모달창 만들기, �
           <View style={{width:34,height:54,justifyContent:"center"}}>
           </View>
           <View style={{width:34,height:37,justifyContent:"center",padding:2}}>
-            <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('test')}>
-              <Image
-                  style={{
-                      width:'85%', 
-                      height:'85%', 
-                      resizeMode:"contain",
-                  }}
-                  source={require("../../assets/icon_setting.png")}
-                  />
+          <TouchableOpacity activeOpacity={0.8} onPress={() => {navigation.navigate('Home'); logout();}}>
+            <MaterialIcons name="close" size={24} color="red" />
             </TouchableOpacity>
           </View>
         </View>
