@@ -18,6 +18,10 @@ import readgb from "./components/part3/readgb";
 import test from "./components/part3/test";
 import QrToRead from './components/scanner/QrToRead';
 
+//firebase 추가
+import FirebaseRegister from './components/screens/FirebaseRegister';
+import FirebaseLogin from './components/screens/FirebaseLogin';
+
 
 const Stack = createStackNavigator();
 
@@ -32,16 +36,19 @@ export default function App() {
            headerStyle: {
              height: 120,
             }
-          }}> 
+          }}
+          > 
           <Stack.Screen name="Scan" component={Scan} options={{title: 'Place.QR'}}/>
           <Stack.Screen name="Scanned" component={Scanned} options={{title: 'Place.QR'}}/>
           <Stack.Screen name="Write" component={Write} options={{title: 'Place.QR'}}/>
           <Stack.Screen name="Home" component={Home} options={{title: 'Place.QR'}} />
           <Stack.Screen name="LoginPage" component={LoginPage} options={{title: 'Place.QR'}}/>
+          <Stack.Screen name="FirebaseLogin" component={FirebaseLogin} options={{title: 'Place.QR'}}/>
           <Stack.Screen name="R_page" component={R_page} options={{title: 'Place.QR'}}/>
+          <Stack.Screen name="FirebaseRegister" component={FirebaseRegister} options={{title: 'Place.QR'}}/>
           <Stack.Screen name="Qrmake" component={Qrmake} options={{title: 'Place.QR'}}/>
           <Stack.Screen name="Qrpage" component={Qrpage} options={{title: 'Place.QR'}}/>
-          <Stack.Screen name="Mypagemain" component={Mypagemain} options={{title:'Place.QR'}}/>
+          <Stack.Screen name="Mypagemain" component={Mypagemain} options={{title:'Place.QR', gestureEnabled:false, headerShown:false }}/>
           <Stack.Screen name="Mygbcal" component={Mygbcal} options={{title: '장소이름'}}/>
           <Stack.Screen name="myplace" component={myplace} options={{title: '내 장소들'}}/>
           <Stack.Screen name="readgb" component={readgb} options={{title: '방명록 읽기'}}/>

@@ -1,10 +1,30 @@
-import React from "react";
-import {StyleSheet,Button,View,TouchableOpacity, Text,Alert, Image } from "react-native";
+import React, { useEffect, useState } from "react";
+import {StyleSheet,Button,View,TouchableOpacity, Text,Alert, Image, BackHandler } from "react-native";
 import Constants from 'expo-constants';
+import axios from 'axios';
+import { MaterialIcons } from '@expo/vector-icons';
 
-export default function Mypagemain({navigation}){
+//firebase 추가
+import { FirebaseAuth } from "../../firebaseConfig";
+import { signOut } from "firebase/auth";
+import { useRoute, useFocusEffect } from "@react-navigation/native";
+
+export default function Mypagemain({navigation, route}){//모달창 만들기, 기능 구현
+  const userEmail = route.params.userEmail;
+
+  const logout = async() => {
+    try {
+        await signOut(FirebaseAuth);
+    }
+    catch(e){
+        console.error(e);
+    }
+  }
+
+
   return(
     <View style ={styles.container}>
+      {console.log(userEmail)}
       <Image
             style={{
                 width:'100%', 
@@ -15,7 +35,13 @@ export default function Mypagemain({navigation}){
             }}
             source={require("../../assets/PQRbackIMG4.png")}
             resizeMode="center"
-            />
+      />
+
+      <View style={{
+        width:'100%',
+        height:100
+      }} />
+
       <View style={styles.accountbutton}>
         <View style={{width:300,height:74}}>
           <View style={{width:300,height:37,justifyContent:"center"}}>
@@ -30,15 +56,8 @@ export default function Mypagemain({navigation}){
           <View style={{width:34,height:54,justifyContent:"center"}}>
           </View>
           <View style={{width:34,height:37,justifyContent:"center",padding:2}}>
-            <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('test')}>
-              <Image
-                  style={{
-                      width:'85%', 
-                      height:'85%', 
-                      resizeMode:"contain",
-                  }}
-                  source={require("../../assets/icon_setting.png")}
-                  />
+          <TouchableOpacity activeOpacity={0.8} onPress={() => {navigation.navigate('Home'); logout();}}>
+            <MaterialIcons name="close" size={24} color="red" />
             </TouchableOpacity>
           </View>
         </View>
@@ -200,6 +219,7 @@ const styles=StyleSheet.create({
     height: 53,
     // left: 37,
     // top: 287
+    zIndex:4,
     ...Platform.select({
       ios: {
         shadowColor: "#000000",
