@@ -51,39 +51,52 @@ const Home = (route) => {
                    console.log(result);
                    setImageUrl(result.assets[0].uri);};
                    
-                   const postTest = async() => {
-                    try{
-                         //서버에 요청 보내기
-                         const localUri = result.assets[0].uri;
-                         const filename = localUri.split('/').pop();
-                         const match = /\.(\w+)$/.exec(filename ?? '');
-                         const type = match ? `image/${match[1]}` : `image`;
-                         const formData = new formData();
+        //            const postTest = async() => {
+        //             try{
+        //                  //서버에 요청 보내기
+        //                  const localUri = result.assets[0].uri;
+        //                  const filename = localUri.split('/').pop();
+        //                  const match = /\.(\w+)$/.exec(filename ?? '');
+        //                  const type = match ? `image/${match[1]}` : `image`;
+        //                  const formData = new formData();
             
-                         let dataset = {
-                            description: `${inputs.talk}`,
-                           name:`${inputs.name}`,
-                             relation:`${inputs.relation}`,
-                             contact:`${inputs.phone}`,
-                             user: null,
-                             place: `${placeID}`
+        //                  let dataset = {
+        //                   name:`${inputs.p_i}`,
+        //                   description: `${inputs.place}`,
+        //                   owner: null
+
             
-                         }      
-                         formData.append("data", JSON.stringify(dataset)); // JSON 형식으로 파싱 후 추가
-                         // formData.append('photo', {uri: localUri, name: filename, type});
+        //                  }      
+        //                  formData.append("data", JSON.stringify(dataset)); // JSON 형식으로 파싱 후 추가
+        //                  formData.append('photo', {uri: localUri, name: filename, type});
              
-                          await axios({
-                             method: 'post',
-                             url:'https://www.placeqr.store/places/',
-                              headers: {
-                                'content-type': 'multipart/form-data',
-                            },
-                              data: formData
-                          })
-                        } catch (error) {
-                          console.log(error);
-                        }};
+        //                   await axios({
+        //                      method: 'post',
+        //                      url:'https://www.placeqr.store/places/',
+        //                       headers: {
+        //                         'content-type': 'multipart/form-data',
+        //                     },
+        //                       data: formData
+        //                   })
+        //                 } catch (error) {
+        //                   console.log(error);
+        //                 }};
         
+    const axiosTest = async() => {
+      try{
+        await axios.post('https://www.placeqr.store/places/', {
+          name: `${inputs.place}`,
+          description: `${inputs.p_i}`,
+          owner: 1
+        })
+      }
+      catch(e){
+        console.log(e);
+      }
+    };
+
+
+    
 
 
 
@@ -132,7 +145,7 @@ const Home = (route) => {
       {imageUrl && <Image source={{uri: imageUrl}} style={{width:100, height:100,marginRight:200, marginTop:10 }}/>}
       </View>
       
-      <TouchableOpacity onPress={() => {navigation.navigate('Qrpage'); postTest();}}
+      <TouchableOpacity onPress={() => {navigation.navigate('Qrpage'); axiosTest();}}
         //hitSlop={{ bottom:100, top:100, left:100, right:100}}
         pressRetentionOffset={{ bottom:10, top:10, left:10, right:10}}
         >
