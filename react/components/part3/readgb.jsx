@@ -54,7 +54,6 @@ export default function readgb({navigation, route}){
       <View style={{width:344,height:359}}>
         <ScrollView>
           {/* map 함수를 이용하여 방명록 데이터 나열 - 특정 장소의 방명록만 나열 */}
-          {news.filter(user => user.category == 'politic').map(user => (
           <View style={styles.guestlist}>
             <View style={{width:116,height:47,marginLeft:30,display:"flex",flexDirection:'row'}}>
               <View style={{width:58,height:47,paddingTop:11}}>
@@ -68,7 +67,6 @@ export default function readgb({navigation, route}){
               <Text style={styles.writetime}>글을 쓴 시각</Text>
             </View>           
           </View>
-          ))}
         </ScrollView>
       </View>
     </View>
