@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 //import EventCalendar from 'react-native-events-calendar';
 import moment from 'moment';
 import axios from 'axios';
+import { todayString } from 'react-native-calendars/src/expandableCalendar/commons';
 
 LocaleConfig.locales['fr'] = {
   monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
@@ -20,48 +21,59 @@ LocaleConfig.defaultLocale = 'fr';
 
 
 class Mygbcal extends Component {
-  state={
-    selectedDate: '',
+  constructor(props){//state 초기값 지정
+  super(props);
+    this.state = { //created_at,place,description
+      gbinfo: [],
+    }
   }
+  // setGuestbook = ()=>{
+  //   axios.get('https://www.placeqr.store/comments/')
+  //   .then((response)=>{
+  //       const gbinfo=response.data;
+  //       this.setState({gbinfo});
 
+  //   })
+  //   .catch((error)=>{console.log('오류',error)});
+  // }
+
+  // setGuestbook = async () => {
+  //   // 데이터를 가져오는 비동기 함수
+  //   const response = await get('https://www.placeqr.store/comments/');
+  //   const gbinfo = await response.json();
+  //   this.setState({ gbinfo });
+  // }
+
+  setGuestbook = async () => {
+    try {
+      const response = await axios.get('https://www.placeqr.store/comments/');
+      const gbinfo = response.data;
+      this.setState({ gbinfo });
+    } catch (error) {
+      console.log('오류',error);
+    }
+  }
+  componentDidMount(){//다 읽고 실행하기 생명주기 1.생성자(constructor)가 먼저 읽어지고 2.render가 읽어지고 3.componentDidMount를 읽음
+  this.setGuestbook();
+  }
+  
   render() {// id 받아오기, useeffect
-    const [ownerid,getOwnerid,mycomment,getMycomment] = useState();
-    const getData = async () => {
-      try {
-        const response = await axios.get(`https://www.placeqr.store/places/`);
-        getMycomment(response);
-      }
-      catch(error) {
-        console.log(error);
-      }
-    };
-    const getId = async () => {
-        try {
-          const response = await axios.get(`https://www.placeqr.store/`);
-          getOwnerid(response);
-        }
-        catch(error) {
-          console.log(error);
-        }
-      };
-  // 첫 렌더링 때 getData() 한 번 실행    
-  useEffect(() => { 
-    getId();
-  },[]);
-    // 첫 렌더링 때 getData() 한 번 실행    
-    useEffect(() => { 
-      getData();
-      getId();
-    },[]);
-    getSelectedDayEvents = date => {
+    const {gbinfo} = this.state;
+    getSelectedDayEvents = date => { //format 형식 바꾸기 > state값을 데이터에서 찾기 >  데이터 가져오기
       let markedDates = {};
-      markedDates[date] = { selected: true, color: '#FFBA93', borderRadius:10,width:41,height:36,justifyContent:'center',margin:3 };
+      markedDates[date] = { selected: true, color: '#FFBA93', borderRadius:10,width:41,height:36,justifyContent:'center',alignItems:'center',margin:3 };
       let serviceDate = moment(date);
-      serviceDate = serviceDate.format("DD.MM.YYYY");
+      serviceDate = serviceDate.format("YY.MM.DD");
       this.setState({
           selectedDate: serviceDate,
           markedDates: markedDates
       });
+    };
+    const ifDate = () => {//date가 같으면 true date를 비교해서 아래 return에서 map
+      if (this.state.gbinfo.created_at.substring(0,9) == this.state.selectedDate.format("YYYY-MM-DD")) { // item과 item.date, item.date.format이 모두 정의되어 있는지 확인합니다.
+        return true;
+      }
+      return false;
     };
     return (
       <View style={[styles.container]}>
@@ -77,9 +89,8 @@ class Mygbcal extends Component {
                 resizeMode="center"
                 />
           <View style={styles.back1}>
-
-            <View style={{width:355,height:400,}}>
-              <View style={{width:355,height:400,alignItems:'center'}}>
+            <View style={{width:355,height:360,marginTop: 10,}}>
+              <View style={{width:355,height:360,alignItems:'center'}}>
                 {/* <View style={styles.back2}>               */}
                   <Calendar 
                   // theme={{'stylesheet.day.basic':{'base':{width:338,height:300 }}}}
@@ -93,9 +104,12 @@ class Mygbcal extends Component {
                     dayTextColor: '#000000',
                     textSectionTitleColor: '#565656',
                     selectedDayBackgroundColor: '#FFBA93',
-                    todayTextColor: '#00adf5',
+                    todayTextColor: '#FA5B32',
+                    //todayBackgroundColor:"#FF998B",
                     arrowColor: '#4D5A73',
                     arrowWidth:'bold',
+                    selectedDayTextColor:'#000000',
+                    textDisabledColor:"#B7B7B7",
 
                     'stylesheet.calendar.header': {
                       week: {
@@ -108,16 +122,17 @@ class Mygbcal extends Component {
                   }}
                   style={{
                     width:340,
-                    height:380,
+                    height:350,
                     borderRadius:10,
+                    //justifyContent: 'center',
                     backgroundColor:"#ffffff"
                   }}
                   // Initially visible month. Default = Date()
-                  current={'2023-01-24'}
+                  current={undefined}
                   // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-                  minDate={'2023-01-01'}
+                  //minDate={'2023-01-01'}
                   // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-                  maxDate={'2023-12-31'}
+                  //maxDate={'2023-12-31'}
                   // Handler which gets executed on day press. Default = undefined
                   onDayPress={(day) => {getSelectedDayEvents(day.dateString);}}
                   // Handler which gets executed on day long press. Default = undefined
@@ -136,10 +151,10 @@ class Mygbcal extends Component {
                       )
                   }
                   // Do not show days of other months in month page. Default = false
-                  hideExtraDays={true}
+                  hideExtraDays={false}
                   // If hideArrows=false and hideExtraDays=false do not switch month when tapping on greyed out
                   // day from another month that is visible in calendar page. Default = false
-                  disableMonthChange={true}
+                  disableMonthChange={false}
                   // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
                   firstDay={1}
                   // Hide day names. Default = false
@@ -155,7 +170,7 @@ class Mygbcal extends Component {
                   // Disable right arrow. Default = false
                   disableArrowRight={false}
                   // Disable all touch events for disabled days. can be override with disableTouchEvent in markedDates
-                  disableAllTouchEventsForDisabledDays={true}
+                  disableAllTouchEventsForDisabledDays={false}
                   /** Replace default month and year title with custom one. the function receive a date as parameter. */
                   //renderHeader={(date) => {/*Return JSX*/}}
                   // renderHeader={(date) => {
@@ -180,43 +195,40 @@ class Mygbcal extends Component {
                   //   },
                   // }}
                   />
-                  
                 {/* </View> */}
               </View>
             </View>
-            
+            <View style={{width:355,height:27,alignItems:'center',flexDirection: 'row'}}>
+              <View style={styles.line}></View>
+              <Text> </Text>
+              <Text style={[styles.infotext,{color:'#FFFFFF'}]}>
+                {(() => {
+                  if(this.state.selectedDate==null){
+                    return moment().format("YY.MM.DD");
+                  }
+                  else{
+                    return this.state.selectedDate;
+                  }
+                })()}
+              </Text>
+              <Text> </Text>
+              <View style={styles.line}></View>
+            </View>
             <View style={{width:355,height:218,alignItems:'center',paddingTop:10}}>
               <ScrollView>
-                <View style={styles.back3}>
-                  <View style={[styles.place,{zIndex:1}]}>
-                    <Text style={styles.placename}>희영이집</Text>
-                  </View>
-                  <View style={[styles.back4,{marginTop:-20}]}>
-                    <View style={{width:275,height:118,alignItems:'center',marginTop:10}}> 
-                      <Text style={[styles.infotext,{color:'#626262'}]}>고양이가 너무 귀여워여</Text>
+                {this.state.gbinfo.map((e) => (
+                  <View style={styles.back3}>
+                    <View style={[styles.place,{zIndex:1}]}>
+                      <Text style={styles.placename}>{e.place}</Text>
+                    </View>
+                    <View style={[styles.back4,{marginTop:-20}]}>
+                      <View style={{width:275,height:118,alignItems:'center',marginTop:10}}> 
+                        <Text style={[styles.infotext,{color:'#626262'}]}>{e.description}</Text>
+                      </View>
                     </View>
                   </View>
-                </View>
-                <View style={styles.back3}>
-                  <View style={[styles.place,{zIndex:1}]}>
-                    <Text style={styles.placename}>희영이집</Text>
-                  </View>
-                  <View style={[styles.back4,{marginTop:-20}]}>
-                    <View style={{width:275,height:118,alignItems:'center',marginTop:10}}> 
-                      <Text style={[styles.infotext,{color:'#626262'}]}>고양이가 너무 귀여워여</Text>
-                    </View>
-                  </View>
-                </View>
-                <View style={styles.back3}>
-                  <View style={[styles.place,{zIndex:1}]}>
-                    <Text style={styles.placename}>희영이집</Text>
-                  </View>
-                  <View style={[styles.back4,{marginTop:-20}]}>
-                    <View style={{width:275,height:118,alignItems:'center',marginTop:10}}> 
-                      <Text style={[styles.infotext,{color:'#626262'}]}>고양이가 너무 귀여워여</Text>
-                    </View>
-                  </View>
-                </View>
+                    ))
+                }
               </ScrollView>
             </View>
         </View>
@@ -271,14 +283,14 @@ class Mygbcal extends Component {
   },
   line:{
     alignItems:"left",
-    backgroundColor:"#2c2f40",
+    backgroundColor:"#FFFFFF",
     //padding:19,
     //paddingLeft:6,
     //marginBottom:35,
     //borderRadius:10,
     marginLeft:5,
     marginRight:5,
-    width: 123,
+    width: 122,
     height: 1,
     // left: 34,
     // top: 129,
