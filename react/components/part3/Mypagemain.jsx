@@ -1,15 +1,30 @@
 import React, { useEffect, useState } from "react";
-import {StyleSheet,Button,View,TouchableOpacity, Text,Alert, Image } from "react-native";
+import {StyleSheet,Button,View,TouchableOpacity, Text,Alert, Image, BackHandler } from "react-native";
 import Constants from 'expo-constants';
 import axios from 'axios';
 import { MaterialIcons } from '@expo/vector-icons';
 
+//firebase 추가
+import { FirebaseAuth } from "../../firebaseConfig";
+import { signOut } from "firebase/auth";
+import { useRoute, useFocusEffect } from "@react-navigation/native";
+
 export default function Mypagemain({navigation, route}){//모달창 만들기, 기능 구현
-  const loginID = route.params.loginID;
+  const userEmail = route.params.userEmail;
+
+  const logout = async() => {
+    try {
+        await signOut(FirebaseAuth);
+    }
+    catch(e){
+        console.error(e);
+    }
+  }
+
 
   return(
     <View style ={styles.container}>
-      {console.log(loginID)}
+      {console.log(userEmail)}
       <Image
             style={{
                 width:'100%', 
@@ -20,7 +35,13 @@ export default function Mypagemain({navigation, route}){//모달창 만들기, �
             }}
             source={require("../../assets/PQRbackIMG4.png")}
             resizeMode="center"
-            />
+      />
+
+      <View style={{
+        width:'100%',
+        height:100
+      }} />
+
       <View style={styles.accountbutton}>
         <View style={{width:300,height:74}}>
           <View style={{width:300,height:37,justifyContent:"center"}}>
@@ -198,6 +219,7 @@ const styles=StyleSheet.create({
     height: 53,
     // left: 37,
     // top: 287
+    zIndex:4,
     ...Platform.select({
       ios: {
         shadowColor: "#000000",
